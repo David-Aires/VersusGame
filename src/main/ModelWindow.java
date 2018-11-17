@@ -53,9 +53,13 @@ public class ModelWindow {
 	public ModelWindow(String tiledmap, String music ) {
 		this.tiledMap = tiledmap;
 		this.music = music;
-		getscreenSize();
 	}
 	
+
+	public ModelWindow() {
+		getscreenSize();
+	}
+
 
 	/**
 	 * @return the tiledmap
