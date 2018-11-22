@@ -2,13 +2,14 @@ package versus.view;
 
 import java.util.Observer;
 
+import versus.controller.WindowController;
+import versus.model.WindowModel;
 
 
-//import versus.controller.WindowController;
-//import versus.model.WindowModel;
+
 public abstract class WindowView implements Observer{
 
-	/*
+	
 	 protected WindowModel model;
 	protected WindowController controller;
 	
@@ -19,8 +20,6 @@ public abstract class WindowView implements Observer{
 		model.addObserver(this); // Connection between the view and the model
 	}
 
-	public abstract void enableWarning() ;
-
-	public abstract void disableWarning() ;
-	*/
+	
+	
 }
