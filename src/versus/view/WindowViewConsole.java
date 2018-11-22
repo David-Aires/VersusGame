@@ -5,12 +5,9 @@ import java.util.Observable;
 import versus.controller.WindowController;
 import versus.model.WindowModel;
 
-public class WindowViewGUI extends WindowView{
+public class WindowViewConsole extends WindowView {
 
-	
-	
-	
-	public WindowViewGUI(WindowModel model, WindowController controller) {
+	public WindowViewConsole(WindowModel model, WindowController controller) {
 		super(model, controller);
 		// TODO Auto-generated constructor stub
 	}
@@ -22,9 +19,6 @@ public class WindowViewGUI extends WindowView{
 	}
 
 	
-	/*
-	 * protected WindowModel model(){
-		return model;
-	}
-	*/
+	
+	
 }
