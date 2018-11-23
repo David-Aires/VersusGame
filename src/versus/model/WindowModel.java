@@ -3,13 +3,14 @@ package versus.model;
 
 	import java.awt.Dimension;
 	import java.awt.Toolkit;
+import java.util.Observable;
 
 	/**
 	 * @author Aires David
 	 * 
 	 */
 
-	public class WindowModel {
+	public class WindowModel extends Observable{
 
 		/**
 		 * The TiledMap
