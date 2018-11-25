@@ -19,6 +19,7 @@ public class MainWindow extends BasicGameState implements CONSTANTS {
 	  private Image backgroundMap;
 	  private Music backgroudMusic;
 	  private int playersChoice = 0;
+	  private GameContainer container;
 	    private static final int NOCHOICES = 3;
 	    private static final int START = 0;
 	    private static final int INFO = 1;
@@ -31,6 +32,7 @@ public class MainWindow extends BasicGameState implements CONSTANTS {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		this.container = container;
 		ModelWindow menu = new ModelWindow(menuImage,musicMenu);
 		this.game = game;
 		this.backgroundMap = new Image(menu.getTiledMap());
@@ -93,9 +95,11 @@ public class MainWindow extends BasicGameState implements CONSTANTS {
 	private void renderPlayersOptions() {
         for (int i = 0; i < NOCHOICES; i++) {
             if (playersChoice == i) {
-                playersOptionsTTF.drawString(100, i * 50 + 200, playersOptions[i]);
+                playersOptionsTTF.drawString(container.getWidth()/2f - 5/2f,
+                        i*50+(container.getHeight()/2f - 5/2f), playersOptions[i]);
             } else {
-                playersOptionsTTF.drawString(100, i * 50 + 200, playersOptions[i], notChosen);
+                playersOptionsTTF.drawString(container.getWidth()/2f - 5/2f,
+                       i*50+(container.getHeight()/2f - 5/2f), playersOptions[i], notChosen);
             }
         }
     }
