@@ -69,9 +69,9 @@ public class CharacterModel {
 	
 	
 	public String toString() {
-		String str="Joueur local";
-		str+= "\nCoordonnée X: "+this.x;
-		str+= "\nCoordonnée Y: "+this.y;
+		String str="";
+		str+= "\nCoordonnée X: "+(this.x+1);
+		str+= "\nCoordonnée Y: "+(this.y+1);
 		str+= "\nEtat de déplacement: "+this.moving;
 		return str;
 	}

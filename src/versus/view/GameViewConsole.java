@@ -23,13 +23,13 @@ public class GameViewConsole extends GameView {
 	private int [] piège;
 	private String reponse="Bienvenue";
 	
-	
+
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		
 		System.out.println(player);
-		initBoard(player.getX(),player.getY());
+		initBoard();
 		
 	}
 	
@@ -47,15 +47,15 @@ public class GameViewConsole extends GameView {
 	}
  
 	
-	private  void initBoard(int x,int y) {
+	private  void initBoard() {
 		
 		for(int j=0;j<board.length;j++) {
 			for(int i=0;i<board.length;i++) {
 				board[j][i]= "[   ]";
 			}
 		}
-		miseEchelle(x, y);
-		miseEchelle(300, 600);
+		board[player.getLY()][player.getLX()]="[ + ]";
+		board[player.getRY()][player.getRX()]="[ + ]";
 		printHelp();
 		
 		
@@ -65,9 +65,7 @@ public class GameViewConsole extends GameView {
 	
 	}
 	
-	public void miseEchelle(int x,int y) {
-		board[(x-1)/40][(y-1)/40]="[ + ]";
-	}
+
 	
 	private void printHelp(){
 		printBoard();
@@ -127,29 +125,29 @@ public class GameViewConsole extends GameView {
 							case "tp" :
 								int i = sc.nextInt();
 								int a= sc.nextInt();
-								if(i<0 || i> 600 || a<0 || a>600){
+								if(i<0 || i> 15 || a<0 || a>15){
 									affiche("Emplacement incorrect");
 									printHelp(); 
 									break;
 								}else {
 									
-								reponse= controller.mouvement(i, a);;
+								reponse= controller.mouvementLocal(i, a);;
 								break;
 								}
 							
 							case "A" : 
-								reponse= controller.mouvement(player.getX(), player.getY()+41);
+								reponse= controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY());
 								break;
 							case "R" : 
-								reponse= controller.mouvement(player.getX(), player.getY()-41);
+								reponse= controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY());
 								break;
 								
 							case "B" : 
-								reponse= controller.mouvement(player.getX()+41, player.getY());
+								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1));
 								break;
 								
 							case "H" : 
-								reponse= controller.mouvement(player.getX()-41, player.getY());
+								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1));
 								break;
 							default : 
 								affiche("Opération incorrecte");

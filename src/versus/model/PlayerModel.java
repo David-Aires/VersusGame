@@ -12,17 +12,22 @@ import java.util.Observable;
  *
  */
 public class PlayerModel extends Observable {
-	CharacterModel playerModel;
+	CharacterModel plocalModel;
+	CharacterModel enemyModel;
 	
 	public PlayerModel() {
-		playerModel= new CharacterModel();
-		playerModel.setX(300);
-		playerModel.setY(0);
+		plocalModel= new CharacterModel();
+		plocalModel.setX(0);
+		plocalModel.setY(6);
+		
+		enemyModel= new CharacterModel();
+		enemyModel.setX(14);
+		enemyModel.setY(6);
 	}
 	
-	public void mouvements(int x,int y,boolean moving) {
-		if(x!=playerModel.getX() || y!=playerModel.getY()) {
-			playerModel.mouvement(x, y,moving);
+	public void mouvementsLocal(int x,int y,boolean moving) {
+		if(x!=plocalModel.getX() || y!=plocalModel.getY()) {
+			plocalModel.mouvement(x, y,moving);
 			setChanged();
 			notifyObservers();
 		}
@@ -31,20 +36,37 @@ public class PlayerModel extends Observable {
 	
 	}
 	public String toString() {
-		return playerModel.toString();
+		String str="Joueur local";
+		str+=plocalModel.toString();
+		str+="\n\n\nJoueur réseau";
+		str+=enemyModel.toString();
+		return str;
 		
 	}
 	
-	public int getX() {
-		return playerModel.getX();
+	public int getLX() {
+		return plocalModel.getX();
 	}
 	
-	public int getY() {
-		return playerModel.getY();
+	public int getLY() {
+		return plocalModel.getY();
 	}
 	
-	public boolean getMoving() {
-		return playerModel.isMoving();
+	public boolean getLMoving() {
+		return plocalModel.isMoving();
 	}
 
+	
+	
+	public int getRX() {
+		return enemyModel.getX();
+	}
+	
+	public int getRY() {
+		return enemyModel.getY();
+	}
+	
+	public boolean getRMoving() {
+		return enemyModel.isMoving();
+	}
 }

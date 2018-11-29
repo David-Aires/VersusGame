@@ -23,13 +23,13 @@ public class CharacterController {
 		
 	}
 	
-	public String mouvement(int x,int y) {
-		if(player.getMoving()) {
-			player.mouvements(x, y, false);
+	public String mouvementLocal(int x,int y) {
+		//if(player.getLMoving()) {
+			player.mouvementsLocal(x, y, false);
 			return "Mouvement effectué";
-		} else {
-			return "Ce n'est pas votre tour";
-		}
+		//} else {
+		//	return "Ce n'est pas votre tour";
+		//}
 	}
 
 }
