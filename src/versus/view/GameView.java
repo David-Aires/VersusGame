@@ -9,7 +9,7 @@ import versus.controller.CharacterController;
 import versus.model.PlayerModel;
 
 /**
- * @author Ajaxo
+ * @author Aires David
  *
  */
 public abstract class GameView implements Observer {
