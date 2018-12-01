@@ -13,13 +13,13 @@ import versus.model.PlayerModel;
 
 
 /**
- * @author Aires David
+ * @author Aires David, Quentin Lebrun
  *
  */
 public class GameViewConsole extends GameView {
 	
 	protected Scanner sc;
-	private  String [][] board= new String[15][15];
+	private  String [][] board= new String[11][11];
 	private int [] piège;
 	private String reponse="Bienvenue";
 	
@@ -125,7 +125,7 @@ public class GameViewConsole extends GameView {
 							case "tp" :
 								int i = sc.nextInt();
 								int a= sc.nextInt();
-								if(i<0 || i> 15 || a<0 || a>15){
+								if(i<0 || i> 11 || a<0 || a>11){
 									affiche("Emplacement incorrect");
 									printHelp(); 
 									break;
