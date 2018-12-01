@@ -20,10 +20,12 @@ public class GameViewConsole extends GameView {
 	
 	protected Scanner sc;
 	private  String [][] board= new String[11][11];
-	private int [] piège;
+	
 	private String reponse="Bienvenue";
 	
-
+// for example 9,6 IS EQUAL TO 10,7 in X,Y  
+	private int [][]trap={{9,10},{6,5}};
+	
 	
 	@Override
 	public void update(Observable o, Object arg) {
@@ -58,14 +60,25 @@ public class GameViewConsole extends GameView {
 		board[player.getRY()][player.getRX()]="[ + ]";
 		printHelp();
 		
-		
-		
-		
-	
 	
 	}
 	
+	private void isTrapped(){
+		
+			for(int i=0;i<2;i++) {
+				if(player.getLX()==trap[0][i] && player.getLY()==trap[1][i]){
+					controller.mouvementLocal(0,5);
+					System.out.println("Vous êtes tombés dans un piège(!Retenez son emplacement!)");
 
+				}
+			}
+	}
+// it's won when the player arrives a the last y which is 11 (10 in the array)
+	private void isWon(){
+		if(player.getLX()==10){
+			System.out.println("Vous avez gagné");
+		}
+	}
 	
 	private void printHelp(){
 		printBoard();
@@ -120,7 +133,7 @@ public class GameViewConsole extends GameView {
 						
 						
 						
-						
+						//console's commands to move the players
 						switch(c){
 							case "tp" :
 								int i = sc.nextInt();
@@ -137,17 +150,25 @@ public class GameViewConsole extends GameView {
 							
 							case "A" : 
 								reponse= controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY());
+								isTrapped();
+								isWon();
 								break;
 							case "R" : 
 								reponse= controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY());
+								isTrapped();
+
 								break;
 								
 							case "B" : 
 								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1));
+								isTrapped();
+
 								break;
 								
 							case "H" : 
 								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1));
+								isTrapped();
+
 								break;
 							default : 
 								affiche("Opération incorrecte");
