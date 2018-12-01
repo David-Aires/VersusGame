@@ -27,17 +27,17 @@ import versus.model.PlayerModel;
 
 
 /**
- * @author Aires David
+ *@author Aires David, Quentin Lebrun
  *
  */
 public class GameViewMap extends GameView  implements Observer {
 	private JFrame f;
     private final JPanel gui = new JPanel(new BorderLayout(1, 1));
-    private JButton[][] BoardSquares = new JButton[15][15];
+    private JButton[][] BoardSquares = new JButton[11][11];
     private JPanel Board;
     private final JLabel message = new JLabel(
-            "Etat de la connexion");
-    ImageIcon playerImage= new ImageIcon("resource/hero.png");
+            "Connexion State");
+    ImageIcon playerImage= new ImageIcon("resource/démonLITTLE.png");
     private int lastX= 0;
     private int lastY= 0;
     ImageIcon icon = new ImageIcon(
@@ -51,25 +51,36 @@ public class GameViewMap extends GameView  implements Observer {
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
-        tools.add(new JButton("Reset")); // TODO - add functionality!
+        tools.add(new JButton("Reset"));
+        
+        
+        // TODO - add functionality!
+        
+        
+        
         tools.addSeparator();
-        tools.add(new JButton("Resign")); // TODO - add functionality!
+        tools.add(new JButton("Resign")); 
+        // TODO - add functionality!
+        
+        
         tools.addSeparator();
         tools.add(message);
+        
+        //To check the network, if the other player is connected
         JButton checkNetwork= new JButton("DOWN");
         tools.add(checkNetwork);
         checkNetwork.setBackground(Color.RED); 
-        checkNetwork.setForeground(Color.RED);
+        checkNetwork.setForeground(Color.WHITE);
         checkNetwork.setEnabled(false);
        
 
         gui.add(new JLabel(""), BorderLayout.LINE_START);
 
-        Board = new JPanel(new GridLayout(0, 16));
+        Board = new JPanel(new GridLayout(0, 12));
         Board.setBorder(new LineBorder(Color.BLACK));
         gui.add(Board);
 
-        
+        //create all the buttons
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int ii = 0; ii < BoardSquares.length; ii++) {
             for (int jj = 0; jj < BoardSquares[ii].length; jj++) {
@@ -88,7 +99,7 @@ public class GameViewMap extends GameView  implements Observer {
         
         Board.add(new JLabel(""));
         
-        for (int ii = 0; ii < 15; ii++) {
+        for (int ii = 0; ii < 11; ii++) {
         	
             
                 Board.add(new JLabel("" + (ii + 1),
@@ -97,8 +108,8 @@ public class GameViewMap extends GameView  implements Observer {
         }
         
       
-        for (int ii = 0; ii < 15; ii++) {
-            for (int jj = 0; jj < 15; jj++) {
+        for (int ii = 0; ii < 11; ii++) {
+            for (int jj = 0; jj < 11; jj++) {
                 switch (jj) {
                     case 0:
                         Board.add(new JLabel("" + (ii + 1),
@@ -153,6 +164,3 @@ public class GameViewMap extends GameView  implements Observer {
 	}
 
 }
-
-
-
