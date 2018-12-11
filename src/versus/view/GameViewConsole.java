@@ -28,7 +28,10 @@ public class GameViewConsole extends GameView {
 	//the part[1][y] is for the position in y of the traps
 	private int [][]trap={{9,10,8,2},{6,5,3,2}};
 	
+	private int [][] backInX={{2,3,3},{5,3,7}};
 	
+	private int [][] backInY={{8,5,9},{7,8,7}};
+
 	@Override
 	public void update(Observable o, Object arg) {
 		
@@ -65,6 +68,26 @@ public class GameViewConsole extends GameView {
 	
 	}
 	
+	private void goBackX(){
+		for(int i=0;i<2;i++) {
+			if(player.getLX()==backInX[0][i] && player.getLY()==backInX[1][i]){
+				controller.mouvementLocal(player.getLX()-1,player.getLY());
+				System.out.println("Un changement de direction en X a été activé(!Retenez son emplacement!)");
+
+			}
+		}
+	}
+	// when the player goes on it he
+	private void goBackY(){
+		for(int i=0;i<2;i++) {
+			if(player.getLX()==backInY[0][i] && player.getLY()==backInY[1][i]){
+				controller.mouvementLocal(player.getLX(),player.getLY()+1);
+				System.out.println("Un changement de direction en Y a été activé(!Retenez son emplacement!)");
+
+			}
+		}
+	}
+	//when the player is trapped he goes to his "camp"
 	private void isTrapped(){
 		
 			for(int i=0;i<2;i++) {
@@ -81,6 +104,13 @@ public class GameViewConsole extends GameView {
 			System.out.println("Vous avez gagné");
 		}
 	}
+	// Looks at what can happen with the move of one player
+		private void reviewWhatHappens(){
+			isTrapped();
+			goBackX();
+			goBackY();
+			isWon();
+		}
 	
 	private void printHelp(){
 		printBoard();
@@ -152,24 +182,26 @@ public class GameViewConsole extends GameView {
 							
 							case "E" : 
 								reponse= controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY());
-								isTrapped();
-								isWon();
+								reviewWhatHappens();
 								break;
 							case "O" : 
 								reponse= controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY());
-								isTrapped();
+								reviewWhatHappens();
+
 
 								break;
 								
 							case "S" : 
 								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1));
-								isTrapped();
+								reviewWhatHappens();
+
 
 								break;
 								
 							case "N" : 
 								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1));
-								isTrapped();
+								reviewWhatHappens();
+
 
 								break;
 							default : 
