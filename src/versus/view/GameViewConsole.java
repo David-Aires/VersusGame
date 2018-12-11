@@ -24,7 +24,9 @@ public class GameViewConsole extends GameView {
 	private String reponse="Bienvenue";
 	
 // for example 9,6 IS EQUAL TO 10,7 in X,Y  
-	private int [][]trap={{9,10},{6,5}};
+	//the part[0][x] is for the position in x of the traps
+	//the part[1][y] is for the position in y of the traps
+	private int [][]trap={{9,10,8,2},{6,5,3,2}};
 	
 	
 	@Override
@@ -56,8 +58,8 @@ public class GameViewConsole extends GameView {
 				board[j][i]= "[   ]";
 			}
 		}
-		board[player.getLY()][player.getLX()]="[ + ]";
-		board[player.getRY()][player.getRX()]="[ + ]";
+		board[player.getLY()][player.getLX()]="[ § ]";
+		board[player.getRY()][player.getRX()]="[ § ]";
 		printHelp();
 		
 	
@@ -84,10 +86,10 @@ public class GameViewConsole extends GameView {
 		printBoard();
 		affiche("Pour se téléporter : tp + coordX + coordY");
 		affiche("Pour se déplacer : ");
-		affiche("H : haut");
-		affiche("B: bas");
-		affiche("A : avant");
-		affiche("R: arrière");
+		affiche("N : Nord");
+		affiche("E : Est");
+		affiche("S: Sud");
+		affiche("O : Ouest");
 		
 	}
 	
@@ -148,24 +150,24 @@ public class GameViewConsole extends GameView {
 								break;
 								}
 							
-							case "A" : 
+							case "E" : 
 								reponse= controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY());
 								isTrapped();
 								isWon();
 								break;
-							case "R" : 
+							case "O" : 
 								reponse= controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY());
 								isTrapped();
 
 								break;
 								
-							case "B" : 
+							case "S" : 
 								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1));
 								isTrapped();
 
 								break;
 								
-							case "H" : 
+							case "N" : 
 								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1));
 								isTrapped();
 
