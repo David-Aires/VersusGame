@@ -65,7 +65,9 @@ public class CharacterModel {
 		this.moving = movingCollision;
 	}
 
-
+	public void setMoving(boolean moving){
+		this.moving= moving;
+	}
 	
 	
 	public String toString() {
