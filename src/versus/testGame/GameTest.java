@@ -6,6 +6,7 @@ package versus.testGame;
 
 
 import versus.controller.CharacterController;
+import versus.controller.NetworkController;
 import versus.model.PlayerModel;
 import versus.view.GameViewConsole;
 import versus.view.GameViewMap;
@@ -26,6 +27,7 @@ public class GameTest {
 		CharacterController GamecontrolConsole = new CharacterController(player);
 		CharacterController GamecontrolMap = new CharacterController(player);
 
+		NetworkController GameControlNetwork= new NetworkController(player) ;
 		//Creation of views
 		//Each view must know its controller and have a reference to the model to be able to observe it
 		GameViewMap map = new GameViewMap(player, GamecontrolMap);
