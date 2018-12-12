@@ -4,9 +4,12 @@
 package versus.view;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,12 +18,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import javafx.application.Application;
 import versus.controller.CharacterController;
 import versus.model.PlayerModel;
 
@@ -30,20 +35,38 @@ import versus.model.PlayerModel;
  *@author Aires David, Quentin Lebrun
  *
  */
-public class GameViewMap extends GameView  implements Observer {
+public class GameViewMap extends GameView  implements Observer, ActionListener {
+		
 	private JFrame f;
     private final JPanel gui = new JPanel(new BorderLayout(1, 1));
     private JButton[][] BoardSquares = new JButton[11][11];
     private JPanel Board;
-    private final JLabel message = new JLabel(
-            "Connexion State");
+    private final JLabel message = new JLabel("Connexion State");
+    private JButton reset;
+    
+    JOptionPane jop = new JOptionPane();
+    
     ImageIcon playerImage= new ImageIcon("resource/démonLITTLE.png");
     private int lastX= 0;
     private int lastY= 0;
-    ImageIcon icon = new ImageIcon(
-            new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+    ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
 	
-
+    // prendre en compte le déplacement adverse reçu par le socket
+    private void handleMakeMove() {
+		  //TODO
+    	
+		  
+		  
+	  }
+    
+    public void actionPerformed(ActionEvent e){
+    	if(e.getSource()== reset){
+    		f.dispose();
+    		controller.mouvementLocal(0, 5);
+    		new GameViewMap(player,controller);
+    	}
+    }
+    
 	public GameViewMap(PlayerModel player,CharacterController controller) {
 		super(player,controller);
 		
@@ -51,9 +74,10 @@ public class GameViewMap extends GameView  implements Observer {
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
-        tools.add(new JButton("Reset"));
+        reset = new JButton("Reset");
+        tools.add(reset);
         
-        
+        reset.addActionListener(this);
         // TODO - add functionality!
         
         
@@ -73,6 +97,7 @@ public class GameViewMap extends GameView  implements Observer {
         checkNetwork.setForeground(Color.WHITE);
         checkNetwork.setEnabled(false);
        
+        
 
         gui.add(new JLabel(""), BorderLayout.LINE_START);
 
@@ -122,18 +147,6 @@ public class GameViewMap extends GameView  implements Observer {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	    f = new JFrame("Versus");
         f.add(gui);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -150,7 +163,12 @@ public class GameViewMap extends GameView  implements Observer {
 		BoardSquares[lastX][lastY].setIcon(icon);
 		lastX=player.getLX();
 		lastY= player.getLY();
+		
+		
+		
         BoardSquares[lastX][lastY].setIcon(playerImage);
+        
+        //ajout de l'affichage de l'ennemi???
 	}
 
 
