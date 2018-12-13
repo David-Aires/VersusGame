@@ -15,6 +15,7 @@ public class PlayerModel extends Observable {
 	CharacterModel plocalModel;
 	CharacterModel enemyModel;
 	
+	
 	public PlayerModel() {
 		plocalModel= new CharacterModel();
 		plocalModel.setX(0);
@@ -25,14 +26,23 @@ public class PlayerModel extends Observable {
 		enemyModel.setY(5);
 	}
 	
-	// change the position in x,y and the boolean moving
+	// change the position in x,y and the boolean moving of the local player
 	public void mouvementsLocal(int x,int y,boolean moving) {
 		if(x!=plocalModel.getX() || y!=plocalModel.getY()) {
 			plocalModel.mouvement(x, y,moving);
 			setChanged();
 			notifyObservers();
 		}
+	}
+		// change the position in x,y and the boolean moving of the enemy
+	public void mouvementsEnnemi(int x,int y,boolean moving) {
+		if(x!=enemyModel.getX() || y!=enemyModel.getY()) {
+			enemyModel.mouvement(x, y,moving);
+			
+			setChanged();
+			notifyObservers();
 		
+		}
 		
 	
 	}
@@ -58,6 +68,9 @@ public class PlayerModel extends Observable {
 		return plocalModel.isMoving();
 	}
 
+	public void setLMoving(boolean moving){
+		this.plocalModel.setMoving(moving);
+	}
 	
 	// get position x for enemy Model
 	public int getRX() {
