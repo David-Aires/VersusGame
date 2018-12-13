@@ -34,6 +34,10 @@ public class NetworkController  {
 	public static int PLAYER1 = 1; // Indicate player 1
 	public static int PLAYER2 = 2; // Indicate player 2
 	  
+	public int p1_won=1;
+	public int p2_won=2;
+
+	
 	  public void start(Stage primaryStage) {
 
 		  new Thread( () -> {
