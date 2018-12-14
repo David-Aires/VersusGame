@@ -30,6 +30,10 @@ public class PlayerModel extends Observable {
 	public void mouvementsLocal(int x,int y,boolean moving) {
 		if(x!=plocalModel.getX() || y!=plocalModel.getY()) {
 			plocalModel.mouvement(x, y,moving);
+			
+			setRMoving(true);
+
+			
 			setChanged();
 			notifyObservers();
 		}
@@ -38,6 +42,8 @@ public class PlayerModel extends Observable {
 	public void mouvementsEnnemi(int x,int y,boolean moving) {
 		if(x!=enemyModel.getX() || y!=enemyModel.getY()) {
 			enemyModel.mouvement(x, y,moving);
+			
+			setLMoving(true);
 			
 			setChanged();
 			notifyObservers();
@@ -85,5 +91,9 @@ public class PlayerModel extends Observable {
 	// get the state of moving of  enemy Model
 	public boolean getRMoving() {
 		return enemyModel.isMoving();
+	}
+	
+	public void setRMoving(boolean moving){
+		this.enemyModel.setMoving(moving);
 	}
 }
