@@ -107,6 +107,19 @@ public class CharacterController {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+/*     				PARTIE CLIENT A DEPLACE          */ 	
+	
+	
+	
+	
+	
 	// Input and output streams from/to server
 	  private DataInputStream fromServer;
 	  private DataOutputStream toServer;
@@ -198,6 +211,7 @@ public class CharacterController {
 	    // Receive game status
 	    int status = fromServer.readInt();
 
+	    //si le status est égal à 1 le joueur local a gagné
 	    if (status == controllerNetwork.p1_won) {
 	      // Player 1 won, stop playing
 	      continueToPlay = false;
@@ -209,6 +223,9 @@ public class CharacterController {
 	      //TODO
 	      
 	    }
+	    
+	    //si le status est égal à 2 le joueur local a gagné, 
+
 	    else if (status == controllerNetwork.p2_won) {
 	      // Player 2 won, stop playing
 	      continueToPlay = false;
@@ -220,6 +237,7 @@ public class CharacterController {
 	    }
 	    
 	    else {
+	    	//recois les infos de déplacement du serveur
 	      receiveMove();
 	      // notifier de qui à le tour 
 	      //"myTurn = true", it's my turn
