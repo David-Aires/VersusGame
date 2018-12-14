@@ -46,9 +46,14 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
     
     JOptionPane jop = new JOptionPane();
     
-    ImageIcon playerImage= new ImageIcon("resource/démonLITTLE.png");
-    private int lastX= 0;
-    private int lastY= 0;
+    ImageIcon playerLocalImage= new ImageIcon("resource/démonLITTLE.png");
+    private int lastLocalX= 0;
+    private int lastLocalY= 0;
+    
+    
+    ImageIcon playerNetworkImage= new ImageIcon("resource/magicien2.png");
+    private int lastNetworkX= 0;
+    private int lastNetworkY= 0;
     ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
 	
     // prendre en compte le déplacement adverse reçu par le socket
@@ -160,15 +165,21 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		BoardSquares[lastX][lastY].setIcon(icon);
-		lastX=player.getLX();
-		lastY= player.getLY();
 		
-		
-		
-        BoardSquares[lastX][lastY].setIcon(playerImage);
+		//display the local player icon
+		BoardSquares[lastLocalX][lastLocalY].setIcon(icon);
+		lastLocalX=player.getLX();
+		lastLocalY= player.getLY();
+        BoardSquares[lastLocalX][lastLocalY].setIcon(playerLocalImage);
         
-        //ajout de l'affichage de l'ennemi???
+        
+        
+		//display the local player icon
+        BoardSquares[lastNetworkX][lastNetworkY].setIcon(icon);
+		lastNetworkX=player.getRX();
+		lastNetworkY= player.getRY();
+        BoardSquares[lastNetworkX][lastNetworkY].setIcon(playerNetworkImage);
+        
 	}
 
 
