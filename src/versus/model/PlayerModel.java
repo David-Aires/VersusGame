@@ -15,7 +15,7 @@ public class PlayerModel extends Observable {
 	CharacterModel plocalModel;
 	CharacterModel enemyModel;
 	String ipAddress = "127.0.0.1";
-	boolean isConected = false;
+	boolean isConnected = false;
 	
 	
 	public PlayerModel() {
@@ -102,13 +102,13 @@ public class PlayerModel extends Observable {
 		return this.ipAddress;
 	}
 	
-	public boolean getIsConected() {
-		return this.isConected;
+	public boolean getIsConnected() {
+		return this.isConnected;
 	}
 	
-	public void setIsConected(boolean isConected) {
-		if(this.isConected != isConected) {
-			this.isConected= isConected;
+	public void setIsConnected(boolean isConnected) {
+		if(this.isConnected != isConnected) {
+			this.isConnected= isConnected;
 			setChanged();
 			notifyObservers();
 		}

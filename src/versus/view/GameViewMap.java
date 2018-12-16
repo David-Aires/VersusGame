@@ -186,7 +186,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
    
         
         //update button status connection
-        if(player.getIsConected()) {
+        if(player.getIsConnected()) {
         	 checkNetwork.setText("UP");
              checkNetwork.setBackground(Color.GREEN); 
              

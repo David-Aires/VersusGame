@@ -1,6 +1,7 @@
 package versus.controller;
 
 import java.awt.Component;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -18,8 +19,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Date;
-
-import org.newdawn.slick.SlickException;
 
 import versus.model.PlayerModel;
 import versus.view.GameView;
@@ -158,9 +157,9 @@ public class NetworkController  {
 			
 			 try {
 				if (inet.isReachable(5000)){
-				        player.setIsConected(true);
+				        player.setIsConnected(true);
 				      } else {
-				        player.setIsConected(false);
+				        player.setIsConnected(false);
 				      }
 				
 			} catch (IOException e) {
