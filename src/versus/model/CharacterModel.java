@@ -61,9 +61,7 @@ public class CharacterModel {
 	/**
 	 * @param movingCollision the movingCollision to set
 	 */
-	public void setMovingCollision(boolean movingCollision) {
-		this.moving = movingCollision;
-	}
+	
 
 	public void setMoving(boolean moving){
 		this.moving= moving;

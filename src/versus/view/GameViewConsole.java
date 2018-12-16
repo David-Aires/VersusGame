@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Scanner;
 
 import versus.controller.CharacterController;
+import versus.controller.NetworkController;
 import versus.model.PlayerModel;
 
 
@@ -22,7 +23,7 @@ public class GameViewConsole extends GameView {
 	protected Scanner sc;
 	private  String [][] board= new String[11][11];
 	
-	private String reponse="Bienvenue";
+	
 	
 
 
@@ -39,9 +40,9 @@ public class GameViewConsole extends GameView {
 		System.out.println(string);
 	}
 		
-	public GameViewConsole(PlayerModel player,CharacterController controller) {
+	public GameViewConsole(PlayerModel player,CharacterController controller, NetworkController networkController) {
 		
-		super(player,controller);
+		super(player,controller,networkController);
 		update(null,null);
 		sc = new Scanner(System.in);
 		new Thread (new ReadInput()).start();
@@ -77,19 +78,9 @@ public class GameViewConsole extends GameView {
 	
 	
 	
-// it's won when the player arrives a the last y which is 11 (10 in the array)
-	private void isWon(){
-		if(player.getLX()==10){
-			System.out.println("Vous avez gagné");
-		}
-	}
-	// Looks at what can happen with the move of one player
-		private void reviewWhatHappens(){
-			controller.isTrapped();
-			controller.goBackX();
-			controller.goBackY();
-			isWon();
-		}
+
+
+
 	
 	private void printHelp(){
 		printBoard();
@@ -155,32 +146,32 @@ public class GameViewConsole extends GameView {
 									break;
 								}else {
 									
-								reponse= controller.mouvementLocal(i, a);;
+								controller.mouvementLocal(i, a,true);;
 								break;
 								}
 							
 							case "E" : 
-								reponse= controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY());
+								controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY(),false);
 								
-								reviewWhatHappens();
+							
 								break;
 							case "O" : 
-								reponse= controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY());
-								reviewWhatHappens();
+								controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY(),false);
+								
 
 
 								break;
 								
 							case "S" : 
-								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1));
-								reviewWhatHappens();
+								controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1),false);
+								
 
 
 								break;
 								
 							case "N" : 
-								reponse= controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1));
-								reviewWhatHappens();
+								controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1),false);
+								
 
 
 								break;
@@ -188,7 +179,7 @@ public class GameViewConsole extends GameView {
 								affiche("Opération incorrecte");
 								printHelp();
 						}
-						affiche(reponse);
+						
 					}
 					catch(InputMismatchException e){
 						affiche("Format d'input incorrect");

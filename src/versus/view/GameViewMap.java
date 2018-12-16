@@ -6,11 +6,15 @@ package versus.view;
 import java.awt.BorderLayout;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,8 +29,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import javafx.application.Application;
+import javafx.scene.control.ToolBar;
 import versus.controller.CharacterController;
+import versus.controller.NetworkController;
 import versus.model.PlayerModel;
 
 
@@ -35,14 +40,19 @@ import versus.model.PlayerModel;
  *@author Aires David, Quentin Lebrun
  *
  */
-public class GameViewMap extends GameView  implements Observer, ActionListener {
-		
+public class GameViewMap extends GameView  implements ActionListener, MouseListener {
+	NetworkController networkController;	
 	private JFrame f;
     private final JPanel gui = new JPanel(new BorderLayout(1, 1));
     private JButton[][] BoardSquares = new JButton[11][11];
     private JPanel Board;
+    private JButton checkNetwork = new JButton();
     private final JLabel message = new JLabel("Connexion State");
     private JButton reset;
+    private Thread MessageBox;
+    private String Message;
+  
+
     
     JOptionPane jop = new JOptionPane();
     
@@ -56,51 +66,44 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
     private int lastNetworkY= 0;
     ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
 	
-    // prendre en compte le déplacement adverse reçu par le socket
-    private void handleMakeMove() {
-		  //TODO
-    	
-		  
-		  
-	  }
+    
     
     public void actionPerformed(ActionEvent e){
     	if(e.getSource()== reset){
     		f.dispose();
-    		controller.mouvementLocal(0, 5);
-    		new GameViewMap(player,controller);
+    		controller.mouvementLocal(0, 5,true);
+    		new GameViewMap(player,controller,networkController);
     	}
     }
     
-	public GameViewMap(PlayerModel player,CharacterController controller) {
-		super(player,controller);
-		
+	public GameViewMap(PlayerModel player,CharacterController controller, NetworkController networkController) {
+		super(player,controller,networkController);
 		gui.setBorder(new EmptyBorder(1, 1, 1, 1));
-        JToolBar tools = new JToolBar();
+		JToolBar tools= new JToolBar();
+		tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
         reset = new JButton("Reset");
         tools.add(reset);
+        tools.add(new JButton("Resign"));
         
+        checkNetwork.setText("");
+        checkNetwork.setForeground(Color.WHITE);
         reset.addActionListener(this);
-        // TODO - add functionality!
+        
         
         
         
         tools.addSeparator();
-        tools.add(new JButton("Resign")); 
+         
         // TODO - add functionality!
         
         
         tools.addSeparator();
         tools.add(message);
-        
-        //To check the network, if the other player is connected
-        JButton checkNetwork= new JButton("DOWN");
         tools.add(checkNetwork);
-        checkNetwork.setBackground(Color.RED); 
-        checkNetwork.setForeground(Color.WHITE);
         checkNetwork.setEnabled(false);
+  
        
         
 
@@ -114,13 +117,14 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int ii = 0; ii < BoardSquares.length; ii++) {
             for (int jj = 0; jj < BoardSquares[ii].length; jj++) {
-                JButton b = new JButton();
-                b.setMargin(buttonMargin);
+            	BoardSquares[jj][ii] = new JButton();
+            	BoardSquares[jj][ii].setMargin(buttonMargin);
+            	BoardSquares[jj][ii].setName(jj+"/"+ii);
+            	BoardSquares[jj][ii].setIcon(icon);
+            	BoardSquares[jj][ii].setBackground(Color.WHITE);
+            	BoardSquares[jj][ii].addMouseListener(this);
+            	
                 
-                
-                b.setIcon(icon);
-                    b.setBackground(Color.WHITE);
-                BoardSquares[jj][ii] = b;
             }
         }
         
@@ -140,11 +144,11 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
       
         for (int ii = 0; ii < 11; ii++) {
             for (int jj = 0; jj < 11; jj++) {
-                switch (jj) {
-                    case 0:
-                        Board.add(new JLabel("" + (ii + 1),
-                                SwingConstants.CENTER));
-                    default:
+            	switch (jj) {
+                case 0:
+                    Board.add(new JLabel("" + (ii + 1),
+                            SwingConstants.CENTER));
+                default:
                         Board.add(BoardSquares[jj][ii]);
                 }
             }
@@ -170,7 +174,7 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
 		BoardSquares[lastLocalX][lastLocalY].setIcon(icon);
 		lastLocalX=player.getLX();
 		lastLocalY= player.getLY();
-        BoardSquares[lastLocalX][lastLocalY].setIcon(playerLocalImage);
+        BoardSquares[lastLocalX][lastLocalY].setIcon(playerNetworkImage);
         
         
         
@@ -179,6 +183,20 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
 		lastNetworkX=player.getRX();
 		lastNetworkY= player.getRY();
         BoardSquares[lastNetworkX][lastNetworkY].setIcon(playerNetworkImage);
+   
+        
+        //update button status connection
+        if(player.getIsConected()) {
+        	 checkNetwork.setText("UP");
+             checkNetwork.setBackground(Color.GREEN); 
+             
+             
+        } else {
+        	checkNetwork.setText("DOWN");
+            checkNetwork.setBackground(Color.RED); 
+            
+            
+        }
         
 	}
 
@@ -188,8 +206,63 @@ public class GameViewMap extends GameView  implements Observer, ActionListener {
 
 	@Override
 	public void affiche(String string) {
+		Message = string;
+		MessageBox = new Thread(new MessageBox());
+		MessageBox.start();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		//get the X and Y position of the button with the name
+		String[] temp = (((Component) e.getSource()).getName()).split("/");
+		int tempX =Integer.parseInt(temp[0]);
+		int tempY =Integer.parseInt(temp[1]);
+		
+		
+		//check if the X move is +1 or -1 if it's move the local player to X click position
+		if((tempX==(player.getLX()+1) || (tempX==player.getLX()-1)) && tempY==player.getLY() ) {
+			controller.mouvementLocal(tempX, player.getLY(),true);
+		}
+		
+		
+		//check if the Y move is +1 or -1 if it's move the local player to Y click position
+		if((tempY==(player.getLY()+1) || (tempY==player.getLY()-1)) && tempX==player.getLX() ) {
+			controller.mouvementLocal(player.getLX(),tempY,true);
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}	
+	
+	private class MessageBox implements Runnable{
+
+		@Override
+		public void run() {
+	JOptionPane.showMessageDialog(null, Message);
+	
+		}
+	}
 }

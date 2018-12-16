@@ -17,25 +17,28 @@ import versus.view.GameViewMap;
  *
  */
 public class GameTest {
-
+	static boolean isServer;
 	
 	public GameTest() {
 		//Creation of model 
 		PlayerModel player = new PlayerModel();
 		//Creation of controllers : one for each view	
 		//Each controller must have a reference to the model in order to be able to order it
-		CharacterController GamecontrolConsole = new CharacterController(player);
-		CharacterController GamecontrolMap = new CharacterController(player);
+		NetworkController GameControlNetwork= new NetworkController(player,isServer) ;
+		CharacterController GamecontrolConsole = new CharacterController(player, GameControlNetwork);
+		CharacterController GamecontrolMap = new CharacterController(player, GameControlNetwork);
+		
 
-		NetworkController GameControlNetwork= new NetworkController(player) ;
+		
 		//Creation of views
 		//Each view must know its controller and have a reference to the model to be able to observe it
-		GameViewMap map = new GameViewMap(player, GamecontrolMap);
-		GameViewConsole console = new GameViewConsole(player, GamecontrolConsole);
+		GameViewMap map = new GameViewMap(player, GamecontrolMap,GameControlNetwork);
+		GameViewConsole console = new GameViewConsole(player, GamecontrolConsole,GameControlNetwork);
 		
 		//The reference to the view is given for each controller
 		GamecontrolMap.addview(map);
 		GamecontrolConsole.addview(console);
+		
 		
 		
 	}
@@ -44,6 +47,7 @@ public class GameTest {
 	public static void main(String args[]) {
 		//Schedule a job for the event-dispatching thread:
 		//Creating and showing this application's GUI.
+		isServer = (args[0].equals("true")? true : false);
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new GameTest();

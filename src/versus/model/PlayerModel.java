@@ -14,6 +14,8 @@ import java.util.Observable;
 public class PlayerModel extends Observable {
 	CharacterModel plocalModel;
 	CharacterModel enemyModel;
+	String ipAddress = "127.0.0.1";
+	boolean isConected = false;
 	
 	
 	public PlayerModel() {
@@ -31,15 +33,12 @@ public class PlayerModel extends Observable {
 		if(x!=plocalModel.getX() || y!=plocalModel.getY()) {
 			plocalModel.mouvement(x, y,moving);
 			
-			setRMoving(true);
-
-			
 			setChanged();
 			notifyObservers();
 		}
 	}
 		// change the position in x,y and the boolean moving of the enemy
-	public void mouvementsEnnemi(int x,int y,boolean moving) {
+	public void mouvementsEnnemy(int x,int y,boolean moving) {
 		if(x!=enemyModel.getX() || y!=enemyModel.getY()) {
 			enemyModel.mouvement(x, y,moving);
 			
@@ -49,9 +48,11 @@ public class PlayerModel extends Observable {
 			notifyObservers();
 		
 		}
-		
-	
 	}
+	
+
+	
+	
 	public String toString() {
 		String str="Joueur local";
 		str+=plocalModel.toString();
@@ -95,5 +96,22 @@ public class PlayerModel extends Observable {
 	
 	public void setRMoving(boolean moving){
 		this.enemyModel.setMoving(moving);
+	}
+	
+	public String getIpAddress() {
+		return this.ipAddress;
+	}
+	
+	public boolean getIsConected() {
+		return this.isConected;
+	}
+	
+	public void setIsConected(boolean isConected) {
+		if(this.isConected != isConected) {
+			this.isConected= isConected;
+			setChanged();
+			notifyObservers();
+		}
+		
 	}
 }
