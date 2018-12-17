@@ -54,9 +54,9 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
     private int lastNetworkX= 0;
     private int lastNetworkY= 0;
     JOptionPane jop = new JOptionPane();
-    ImageIcon playerLocalImage= new ImageIcon("resource/démonLITTLE.png");
+    ImageIcon playerLocalImage= new ImageIcon("resource/Player1.png");
     ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
-    ImageIcon playerNetworkImage= new ImageIcon("resource/magicien2.png");
+    ImageIcon playerNetworkImage= new ImageIcon("resource/Player2.png");
 	
     public void actionPerformed(ActionEvent e){
     	if(e.getSource()== reset){
