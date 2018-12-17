@@ -34,8 +34,6 @@ import versus.controller.CharacterController;
 import versus.controller.NetworkController;
 import versus.model.PlayerModel;
 
-
-
 /**
  *@author Aires David, Quentin Lebrun
  *
@@ -51,23 +49,15 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
     private JButton reset;
     private Thread MessageBox;
     private String Message;
-  
-
-    
-    JOptionPane jop = new JOptionPane();
-    
-    ImageIcon playerLocalImage= new ImageIcon("resource/démonLITTLE.png");
     private int lastLocalX= 0;
     private int lastLocalY= 0;
-    
-    
-    ImageIcon playerNetworkImage= new ImageIcon("resource/magicien2.png");
     private int lastNetworkX= 0;
     private int lastNetworkY= 0;
+    JOptionPane jop = new JOptionPane();
+    ImageIcon playerLocalImage= new ImageIcon("resource/démonLITTLE.png");
     ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+    ImageIcon playerNetworkImage= new ImageIcon("resource/magicien2.png");
 	
-    
-    
     public void actionPerformed(ActionEvent e){
     	if(e.getSource()== reset){
     		f.dispose();
@@ -86,33 +76,22 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         reset = new JButton("Reset");
         tools.add(reset);
         tools.add(new JButton("Resign"));
-        
         checkNetwork.setText("");
         checkNetwork.setForeground(Color.WHITE);
         reset.addActionListener(this);
-        
-        
-        
-        
         tools.addSeparator();
          
         // TODO - add functionality!
-        
         
         tools.addSeparator();
         tools.add(message);
         tools.add(checkNetwork);
         checkNetwork.setEnabled(false);
-  
-       
-        
-
         gui.add(new JLabel(""), BorderLayout.LINE_START);
-
         Board = new JPanel(new GridLayout(0, 12));
         Board.setBorder(new LineBorder(Color.BLACK));
         gui.add(Board);
-
+        
         //create all the buttons
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int ii = 0; ii < BoardSquares.length; ii++) {
@@ -123,39 +102,26 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
             	BoardSquares[jj][ii].setIcon(icon);
             	BoardSquares[jj][ii].setBackground(Color.WHITE);
             	BoardSquares[jj][ii].addMouseListener(this);
-            	
-                
             }
         }
-        
-       update(null,null);
-
-        
+        update(null,null);
         Board.add(new JLabel(""));
-        
         for (int ii = 0; ii < 11; ii++) {
-        	
-            
-                Board.add(new JLabel("" + (ii + 1),
-                        SwingConstants.CENTER));
-           
+            Board.add(new JLabel("" + (ii + 1),
+            SwingConstants.CENTER));
         }
-        
-      
         for (int ii = 0; ii < 11; ii++) {
-            for (int jj = 0; jj < 11; jj++) {
-            	switch (jj) {
-                case 0:
-                    Board.add(new JLabel("" + (ii + 1),
-                            SwingConstants.CENTER));
-                default:
-                        Board.add(BoardSquares[jj][ii]);
-                }
+        	for (int jj = 0; jj < 11; jj++) {
+        		switch (jj) {
+        			case 0:
+    				Board.add(new JLabel("" + (ii + 1),
+					SwingConstants.CENTER));
+                
+        			default:
+    				Board.add(BoardSquares[jj][ii]);
+        		}
             }
         }
-		
-		
-		
 	    f = new JFrame("Versus");
         f.add(gui);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -165,44 +131,30 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         f.setVisible(true);
 	}
 
-	
-
 	@Override
 	public void update(Observable o, Object arg) {
-		
 		//display the local player icon
 		BoardSquares[lastLocalX][lastLocalY].setIcon(icon);
 		lastLocalX=player.getLX();
 		lastLocalY= player.getLY();
-        BoardSquares[lastLocalX][lastLocalY].setIcon(playerNetworkImage);
-        
-        
+    	BoardSquares[lastLocalX][lastLocalY].setIcon(playerNetworkImage);
         
 		//display the local player icon
         BoardSquares[lastNetworkX][lastNetworkY].setIcon(icon);
 		lastNetworkX=player.getRX();
 		lastNetworkY= player.getRY();
         BoardSquares[lastNetworkX][lastNetworkY].setIcon(playerNetworkImage);
-   
-        
+  
         //update button status connection
         if(player.getIsConnected()) {
         	 checkNetwork.setText("UP");
-             checkNetwork.setBackground(Color.GREEN); 
-             
-             
-        } else {
+             checkNetwork.setBackground(Color.GREEN);      
+        } 
+        else{
         	checkNetwork.setText("DOWN");
             checkNetwork.setBackground(Color.RED); 
-            
-            
         }
-        
 	}
-
-
-
-
 
 	@Override
 	public void affiche(String string) {
@@ -213,56 +165,46 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
 		//get the X and Y position of the button with the name
 		String[] temp = (((Component) e.getSource()).getName()).split("/");
 		int tempX =Integer.parseInt(temp[0]);
 		int tempY =Integer.parseInt(temp[1]);
-		
-		
+	
 		//check if the X move is +1 or -1 if it's move the local player to X click position
 		if((tempX==(player.getLX()+1) || (tempX==player.getLX()-1)) && tempY==player.getLY() ) {
 			controller.mouvementLocal(tempX, player.getLY(),true);
 		}
 		
-		
 		//check if the Y move is +1 or -1 if it's move the local player to Y click position
 		if((tempY==(player.getLY()+1) || (tempY==player.getLY()-1)) && tempX==player.getLX() ) {
 			controller.mouvementLocal(player.getLX(),tempY,true);
 		}
-		
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}	
 	
 	private class MessageBox implements Runnable{
-
 		@Override
 		public void run() {
-	JOptionPane.showMessageDialog(null, Message);
-	
+			JOptionPane.showMessageDialog(null, Message);
 		}
 	}
 }

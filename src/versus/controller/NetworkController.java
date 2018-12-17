@@ -24,7 +24,6 @@ import versus.model.PlayerModel;
 import versus.view.GameView;
 import versus.view.GameViewMap;
 
-
 /**
  * @author Quentin Lebrun
  *
@@ -34,10 +33,6 @@ public class NetworkController  {
 	GameView vue;
 	GameViewMap vueCarte;
 	CharacterController controller;
-	
-	
-	
-	
 	private InetAddress inet = null;
 	private Thread checkStatus = new Thread(new CheckNetwork());
 	private Thread receiveMove = new Thread(new receiveMove());
@@ -51,45 +46,35 @@ public class NetworkController  {
 	public NetworkController(PlayerModel player, boolean isServer) {
 		this.player=player;
 		this.isServer=isServer;
-		
-		
 		try {
 			inet = InetAddress.getByName(player.getIpAddress());
-		} catch (UnknownHostException e) {
+		} 
+		catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		checkStatus.start();
-	
 		try {
-				if(isServer) {
-					System.out.println("je suis un serveur");
-					
-						socketserver = new ServerSocket(2009);
-					
-					
+			if(isServer) {
+				System.out.println("je suis un serveur");
+					socketserver = new ServerSocket(2009);
 					socketduserver = socketserver.accept();
-					 in = new BufferedReader (new InputStreamReader (socketduserver.getInputStream()));
-					 out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socketduserver.getOutputStream())),true);
-			} else {
+					in = new BufferedReader (new InputStreamReader (socketduserver.getInputStream()));
+					out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socketduserver.getOutputStream())),true);
+			} 
+			else {
 				System.out.println("je suis un client");
 				socketclient = new Socket(InetAddress.getLocalHost(),2009);
 				 in = new BufferedReader (new InputStreamReader (socketclient.getInputStream()));
 				 out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socketclient.getOutputStream())),true);
 			}
-			
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-			
-				}
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		receiveMove.start();
 	}	
-	
-	
-	
-	
 	
 	public void closeNetwork() throws IOException {
 		socketclient.close();
@@ -100,82 +85,68 @@ public class NetworkController  {
 	}
 	
 	public class receiveMove implements Runnable{
-			@Override
-			public void run() {
-				int[] position = new int[2];
-				String temp1= "";
-				while(true) {
+		@Override
+		public void run() {
+			int[] position = new int[2];
+			String temp1= "";
+			while(true) {
 				try {
 					temp1 = in.readLine();
-				} catch (IOException e) {
+				} 
+				catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if(temp1=="fin") {
 					try {
 						closeNetwork();
-					} catch (IOException e) {
+					} 
+					catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} 
 				else if(temp1 !=""){
-				String[] temp = temp1.split("/");
-				position[0] =(Integer.parseInt(temp[0]));
-				position[1] =(Integer.parseInt(temp[1]));
-				player.mouvementsEnnemy(position[0], position[1], false);
-				temp1="";
-				
+					String[] temp = temp1.split("/");
+					position[0] =(Integer.parseInt(temp[0]));
+					position[1] =(Integer.parseInt(temp[1]));
+					player.mouvementsEnnemy(position[0], position[1], false);
+					temp1="";
 				}
-				
-				}
-				
-			}
-			
+			}	
 		}
+	}
 		
-	
-	
 	public void sendMove() {
-			out.println(player.getLX()+"/"+player.getLY());
-			out.flush();
+		out.println(player.getLX()+"/"+player.getLY());
+		out.flush();
+	}
 			
-		}
-			
-			
-			
-		
-		
-	
 	// thread pings the network player to check if he is here
 	private class CheckNetwork implements Runnable {
-
 		@Override
 		public void run() {
 			while(true) {
-				
-			
-			 try {
-				if (inet.isReachable(5000)){
-				        player.setIsConnected(true);
-				      } else {
+				try {
+					if (inet.isReachable(5000)){
+						player.setIsConnected(true);
+					}
+					else {
 				        player.setIsConnected(false);
-				      }
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				    }
+				} 
+				catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					Thread.sleep(1000);
+				} 
+				catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			}
 		}
 	}
 }
-
-

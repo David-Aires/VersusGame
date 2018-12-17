@@ -5,8 +5,6 @@ package versus.model;
 
 import java.util.Observable;
 
-
-
 /**
  * @author Aires David, Quentin Lebrun
  *
@@ -17,12 +15,10 @@ public class PlayerModel extends Observable {
 	String ipAddress = "127.0.0.1";
 	boolean isConnected = false;
 	
-	
 	public PlayerModel() {
 		plocalModel= new CharacterModel();
 		plocalModel.setX(0);
 		plocalModel.setY(5);
-		
 		enemyModel= new CharacterModel();
 		enemyModel.setX(10);
 		enemyModel.setY(5);
@@ -32,26 +28,20 @@ public class PlayerModel extends Observable {
 	public void mouvementsLocal(int x,int y,boolean moving) {
 		if(x!=plocalModel.getX() || y!=plocalModel.getY()) {
 			plocalModel.mouvement(x, y,moving);
-			
 			setChanged();
 			notifyObservers();
 		}
 	}
-		// change the position in x,y and the boolean moving of the enemy
+		
+	// change the position in x,y and the boolean moving of the enemy
 	public void mouvementsEnnemy(int x,int y,boolean moving) {
 		if(x!=enemyModel.getX() || y!=enemyModel.getY()) {
 			enemyModel.mouvement(x, y,moving);
-			
 			setLMoving(true);
-			
 			setChanged();
 			notifyObservers();
-		
 		}
 	}
-	
-
-	
 	
 	public String toString() {
 		String str="Joueur local";
@@ -59,12 +49,13 @@ public class PlayerModel extends Observable {
 		str+="\n\n\nJoueur réseau";
 		str+=enemyModel.toString();
 		return str;
-		
 	}
+	
 	// get position x for player local Model
 	public int getLX() {
 		return plocalModel.getX();
 	}
+	
 	// get position y for player local Model
 	public int getLY() {
 		return plocalModel.getY();
@@ -112,6 +103,5 @@ public class PlayerModel extends Observable {
 			setChanged();
 			notifyObservers();
 		}
-		
 	}
 }

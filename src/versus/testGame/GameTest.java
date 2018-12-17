@@ -3,8 +3,6 @@
  */
 package versus.testGame;
 
-
-
 import versus.controller.CharacterController;
 import versus.controller.NetworkController;
 import versus.model.PlayerModel;
@@ -28,8 +26,6 @@ public class GameTest {
 		CharacterController GamecontrolConsole = new CharacterController(player, GameControlNetwork);
 		CharacterController GamecontrolMap = new CharacterController(player, GameControlNetwork);
 		
-
-		
 		//Creation of views
 		//Each view must know its controller and have a reference to the model to be able to observe it
 		GameViewMap map = new GameViewMap(player, GamecontrolMap,GameControlNetwork);
@@ -38,11 +34,7 @@ public class GameTest {
 		//The reference to the view is given for each controller
 		GamecontrolMap.addview(map);
 		GamecontrolConsole.addview(console);
-		
-		
-		
 	}
-	
 	
 	public static void main(String args[]) {
 		//Schedule a job for the event-dispatching thread:
@@ -53,13 +45,5 @@ public class GameTest {
 				new GameTest();
 			}
 		});
-				
-				
-		
-	
 	}
-
-	
 }
-
-

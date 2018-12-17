@@ -26,8 +26,4 @@ public abstract class GameView implements Observer {
 	}
 	
 	public abstract void affiche(String string) ;
-	
 }
-
-
-	
