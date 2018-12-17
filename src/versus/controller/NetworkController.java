@@ -117,10 +117,93 @@ public class NetworkController  {
 		}
 	}
 		
-	public void sendMove() {
-		out.println(player.getLX()+"/"+player.getLY());
-		out.flush();
-	}
+	// return the good x for the other player in the network
+		public int changeLocalXForNetwork(){
+			if(player.getLX()==0){
+				return 10;
+			}
+			if(player.getLX()==1){
+				return 9;
+			}
+			if(player.getLX()==2){
+				return 8;
+			}
+			if(player.getLX()==3){
+				return 7;
+			}
+			if(player.getLX()==4){
+				return 6;
+			}
+			if(player.getLX()==5){
+				return 5;
+			}
+			if(player.getLX()==6){
+				return 4;
+			}
+			if(player.getLX()==7){
+				return 3;
+			}
+			if(player.getLX()==8){
+				return 2;
+			}
+			if(player.getLX()==9){
+				return 1;
+			}
+			if(player.getLX()==10){
+				return 0;
+			}
+			return 0;
+		}
+		
+		// return the good y for the other player in the network
+		public int changeLocalYForNetwork(){
+			if(player.getLY()==0){
+				return 10;
+			}
+			if(player.getLY()==1){
+				return 9;
+			}
+			if(player.getLY()==2){
+				return 8;
+			}
+			if(player.getLY()==3){
+				return 7;
+			}
+			if(player.getLY()==4){
+				return 6;
+			}
+			if(player.getLY()==5){
+				return 5;
+			}
+			if(player.getLY()==6){
+				return 4;
+			}
+			if(player.getLY()==7){
+				return 3;
+			}
+			if(player.getLY()==8){
+				return 2;
+			}
+			if(player.getLY()==9){
+				return 1;
+			}
+			if(player.getLY()==10){
+				return 0;
+			}
+			return 0;
+		}
+		
+		
+		public void sendMove() {
+			//si tu passes en local 
+			//de 1, 6 à 2, 6 ( x=1,y=5)
+			//pour l'autre joueur tu passes de
+			//11, 6 à 10, 6
+		
+				out.println(changeLocalXForNetwork() +"/"+changeLocalYForNetwork());
+				out.flush();
+				
+			}
 			
 	// thread pings the network player to check if he is here
 	private class CheckNetwork implements Runnable {
