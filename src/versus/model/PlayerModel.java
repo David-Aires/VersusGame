@@ -18,10 +18,10 @@ public class PlayerModel extends Observable {
 	public PlayerModel() {
 		plocalModel= new CharacterModel();
 		plocalModel.setX(0);
-		plocalModel.setY(5);
+		plocalModel.setY(7);
 		enemyModel= new CharacterModel();
-		enemyModel.setX(10);
-		enemyModel.setY(5);
+		enemyModel.setX(14);
+		enemyModel.setY(7);
 	}
 	
 	// change the position in x,y and the boolean moving of the local player
