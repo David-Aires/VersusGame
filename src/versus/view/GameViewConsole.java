@@ -18,7 +18,7 @@ import versus.model.PlayerModel;
  */
 public class GameViewConsole extends GameView {
 	protected Scanner sc;
-	private  String [][] board= new String[11][11];
+	private  String [][] board= new String[15][15];
 	
 	@Override
 	public void update(Observable o, Object arg) {
@@ -83,7 +83,7 @@ public class GameViewConsole extends GameView {
 						case "tp" :
 						int i = sc.nextInt();
 						int a= sc.nextInt();
-						if(i<0 || i> 11 || a<0 || a>11){
+						if(i<0 || i> 15 || a<0 || a>15){
 							affiche("Emplacement incorrect");
 							printHelp(); 
 							break;
