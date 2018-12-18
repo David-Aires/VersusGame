@@ -119,13 +119,13 @@ public class NetworkController  {
 		
 	// return the good x for the other player in the network
 		public int changeLocalXForNetwork(){
-			return 10-player.getLX();
+			return 14-player.getLX();
 		}
 		
 		// return the good y for the other player in the network
 		public int changeLocalYForNetwork(){
 		
-			return 10-player.getLY();
+			return 14-player.getLY();
 		}
 		
 		
