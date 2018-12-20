@@ -18,7 +18,7 @@ import versus.model.PlayerModel;
  */
 public class GameViewConsole extends GameView {
 	protected Scanner sc;
-	private  String [][] board= new String[15][15];
+	private  String [][] board= new String[11][11];
 	
 	@Override
 	public void update(Observable o, Object arg) {
@@ -45,6 +45,9 @@ public class GameViewConsole extends GameView {
 		}
 		board[player.getLY()][player.getLX()]="[ § ]";
 		board[player.getRY()][player.getRX()]="[ £ ]";
+		for(int i=0;i<player.getBonus().get(0).size();i++) {
+			board[player.getBonus().get(1).get(i)][player.getBonus().get(0).get(i)]= "[ B ]";
+		}
 		printHelp();
 	}
 	
@@ -83,30 +86,30 @@ public class GameViewConsole extends GameView {
 						case "tp" :
 						int i = sc.nextInt();
 						int a= sc.nextInt();
-						if(i<0 || i> 15 || a<0 || a>15){
+						if(i<0 || i> 11 || a<0 || a>11){
 							affiche("Emplacement incorrect");
 							printHelp(); 
 							break;
 						}
 						else{	
-							controller.mouvementLocal(i, a,true);;
+							controller.mouvementLocal(i, a,1);;
 							break;
 						}
 						
 						case "E" : 
-						controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY(),false);
+						controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY(),0);
 						break;
 						
 						case "O" : 
-						controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY(),false);
+						controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY(),0);
 						break;
 						
 						case "S" : 
-						controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1),false);
+						controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1),0);
 						break;
 								
 						case "N" : 
-						controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1),false);
+						controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1),0);
 						break;
 							
 						default : 

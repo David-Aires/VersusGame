@@ -87,7 +87,7 @@ public class NetworkController  {
 	public class receiveMove implements Runnable{
 		@Override
 		public void run() {
-			int[] position = new int[2];
+			int[] position = new int[3];
 			String temp1= "";
 			while(true) {
 				try {
@@ -108,9 +108,10 @@ public class NetworkController  {
 				} 
 				else if(temp1 !=""){
 					String[] temp = temp1.split("/");
-					position[0] =(Integer.parseInt(temp[0]));
-					position[1] =(Integer.parseInt(temp[1]));
-					player.mouvementsEnnemy(position[0], position[1], false);
+					position[0] =(Integer.parseInt(temp[0]));   // position X of the player
+					position[1] =(Integer.parseInt(temp[1]));	// position Y of the player
+					position[2] = (Integer.parseInt(temp[2]));	// number of move
+					player.mouvementsEnnemy(position[0], position[1], position[2]);
 					temp1="";
 				}
 			}	
@@ -119,14 +120,9 @@ public class NetworkController  {
 		
 	// return the good x for the other player in the network
 		public int changeLocalXForNetwork(){
-			return 14-player.getLX();
+			return 10-player.getLX();
 		}
-		
-		// return the good y for the other player in the network
-		public int changeLocalYForNetwork(){
-		
-			return 14-player.getLY();
-		}
+	
 		
 		
 		public void sendMove() {
@@ -135,7 +131,7 @@ public class NetworkController  {
 			//pour l'autre joueur tu passes de
 			//11, 6 à 10, 6
 		
-				out.println(changeLocalXForNetwork() +"/"+changeLocalYForNetwork());
+				out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving());
 				out.flush();
 				
 			}

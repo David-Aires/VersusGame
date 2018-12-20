@@ -10,9 +10,10 @@ package versus.model;
 public class CharacterModel {
 	private int x= 300;
 	private int y= 300;
-	private boolean moving= true;
+	private int moving= 1;
+	private int life= 0;
 
-	public void mouvement(int x,int y,boolean moving) {
+	public void mouvement(int x,int y,int moving) {
 		this.x=x;
 		this.y=y;
 		this.moving=moving;
@@ -49,15 +50,23 @@ public class CharacterModel {
 	/**
 	 * @return the movingCollision
 	 */
-	public boolean isMoving() {
+	public int isMoving() {
 		return moving;
 	}
 	
 	/**
 	 * @param movingCollision the movingCollision to set
 	 */
-	public void setMoving(boolean moving){
+	public void setMoving(int moving){
 		this.moving= moving;
+	}
+	
+	public int getLife() {
+		return this.life;
+	}
+	
+	public void setLife(int life) {
+		this.life= life;
 	}
 	
 	public String toString() {
@@ -65,6 +74,7 @@ public class CharacterModel {
 		str+= "\nCoordonnée X: "+(this.x+1);
 		str+= "\nCoordonnée Y: "+(this.y+1);
 		str+= "\nEtat de déplacement: "+this.moving;
+		str+= "\nNombre de Vie: "+this.life;
 		return str;
 	}
 }

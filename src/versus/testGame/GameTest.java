@@ -20,6 +20,8 @@ public class GameTest {
 	public GameTest() {
 		//Creation of model 
 		PlayerModel player = new PlayerModel();
+		
+		
 		//Creation of controllers : one for each view	
 		//Each controller must have a reference to the model in order to be able to order it
 		NetworkController GameControlNetwork= new NetworkController(player,isServer) ;

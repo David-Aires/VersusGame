@@ -3,9 +3,8 @@
  */
 package versus.controller;
 
-import java.io.IOException;
+import java.util.Random;
 
-import versus.controller.NetworkController.receiveMove;
 import versus.model.PlayerModel;
 import versus.view.GameView;
 import versus.view.GameViewMap;
@@ -19,42 +18,78 @@ public class CharacterController {
 	GameView vue;
 	GameViewMap vueGUI;
 	NetworkController controllerNetwork;
-	//for example 9,6 IS EQUAL TO 10,7 in X,Y  
-	//the part[0][x] is for the position in x of the traps
-	//the part[1][y] is for the position in y of the traps
-	
-												//yellow
-	private int [][]trap={{0,0,1,2,6,8,9,9,10},{0,14,9,2,14,3,6,10,5}};
-												//purple
-	private int [][] backInX={{2,2,3,3,4,4,6,6,8,9,9,11,12,12,13,13,13,13,13},{5,10,3,7,13,11,3,6,1,14,7,12,3,8,11,13,14,0,4}};
-												//magenta
-	private int [][] backInY={{0,1,2,3,4,4,5,6,6,6,8,8,13},{6,6,12,0,5,10,8,2,5,11,7,11,7}};
+	Random random1 = new Random();
+	Random random2 = new Random();
+
 	  
 	public void goBackX(){
-		for(int i=0;i<backInX[0].length;i++) {
-			if(player.getLX()==backInX[0][i] && player.getLY()==backInX[1][i]){
-				mouvementLocal(player.getLX()-2,player.getLY(),false);
+		for(int i=0;i<player.getBackX()[0].length;i++) {
+			if(player.getLX()==player.getBackX()[0][i] && player.getLY()==player.getBackX()[1][i] && player.getLlife()==0){
+				mouvementLocal(player.getLX()-2,player.getLY(),0);
 				vue.affiche("Un changement de direction en X a été activé(!Retenez son emplacement!)");
+			}
+			
+			else if(player.getLX()==player.getBackY()[0][i] && player.getLY()==player.getBackY()[1][i] && player.getLlife()>0) {
+				vue.affiche("Tu es chanceux! (une vie en moins) ");
+				player.setLlife(player.getLlife()-1);
+				
 			}
 		}
 	}
-	
+		
 	// when the player goes on it he
 	public void goBackY(){
-		for(int i=0;i<backInY[0].length;i++) {
-			if(player.getLX()==backInY[0][i] && player.getLY()==backInY[1][i]){
-				mouvementLocal(player.getLX(),player.getLY()+2,false);
+		for(int i=0;i<player.getBackY()[0].length;i++) {
+			if(player.getLX()==player.getBackY()[0][i] && player.getLY()==player.getBackY()[1][i] && player.getLlife()==0){
+				mouvementLocal(player.getLX(),player.getLY()+2,0);
 				vue.affiche("Un changement de direction en Y a été activé(!Retenez son emplacement!)");
+			}
+			
+			else if(player.getLX()==player.getBackY()[0][i] && player.getLY()==player.getBackY()[1][i] && player.getLlife()>0) {
+				vue.affiche("Tu es chanceux! (une vie en moins) ");
+				player.setLlife(player.getLlife()-1);
+				
 			}
 		}
 	}
 		
 	//when the player is trapped he goes to his "camp"
 	public void isTrapped(){
-		for(int i=0;i<trap[0].length;i++) {
-			if(player.getLX()==trap[0][i] && player.getLY()==trap[1][i]){
-				mouvementLocal(0,7,false);
+		for(int i=0;i<player.getTrap()[0].length;i++) {
+			if(player.getLX()==player.getTrap()[0][i] && player.getLY()==player.getTrap()[1][i] && player.getLlife()==0){
+				mouvementLocal(0,5,0);
 				vue.affiche("Vous êtes tombés dans un piège(!Retenez son emplacement!)");
+			}
+			
+			else if(player.getLX()==player.getTrap()[0][i] && player.getLY()==player.getTrap()[1][i] && player.getLlife()>0) {
+				vue.affiche("Tu es chanceux! (une vie en moins) ");
+				player.setLlife(player.getLlife()-1);
+				
+			}
+		}
+	}
+	
+	
+	public void isBonus() {
+		for(int i=0;i<player.getBonus().get(0).size();i++) {
+			if(player.getLX()== player.getBonus().get(0).get(i) && player.getLY()==player.getBonus().get(1).get(i)) {
+				int rand = random1.nextInt(1-0 +1);
+				switch(rand) {
+				case 0:
+					player.setLlife(player.getLlife()+1);
+					vue.affiche("Bonus de vie"+"\nVous avez gagné une vie!");
+					
+					break;
+					
+				case 1:
+					int depl = random2.nextInt(3-1 +1);
+					vue.affiche("Bonus de déplacement: "+depl);
+					player.setLMoving(player.getLMoving()+depl);
+					
+					break;
+				}
+				player.getBonus().get(0).remove(i);
+				player.getBonus().get(1).remove(i);
 			}
 		}
 	}
@@ -75,19 +110,20 @@ public class CharacterController {
 		this.vue=vue;
 	}
 	
-	public void mouvementLocal(int x,int y,boolean move) {
-		if(!(player.getLMoving())) {
+	public void mouvementLocal(int x,int y,int move) {
+		if(player.getLMoving()==0) {
 			vue.affiche("Ce n'est pas votre tour");
 		} 
-		if(player.getLMoving() && (x!=player.getLX() || y!=player.getLY())) {
+		if(player.getLMoving()>0 && (x!=player.getLX() || y!=player.getLY())) {
 			player.mouvementsLocal(x, y, move);
 			checkTrap();
+			isBonus();
 			if(player.getLX()==x && player.getLY()==y) {
-				player.setLMoving(false);
+				player.setLMoving(player.getLMoving()-1);
 			}
 			controllerNetwork.sendMove();
 		} 
-		else if(x==player.getLX() && y==player.getLY() && player.getLMoving()){
+		else if(x==player.getLX() && y==player.getLY() && player.getLMoving()==0){
 			vue.affiche("Collision détectée!");
 		} 
 	}
