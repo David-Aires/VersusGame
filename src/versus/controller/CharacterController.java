@@ -29,7 +29,7 @@ public class CharacterController {
 				vue.affiche("Un changement de direction en X a été activé(!Retenez son emplacement!)");
 			}
 			
-			else if(player.getLX()==player.getBackY()[0][i] && player.getLY()==player.getBackY()[1][i] && player.getLlife()>0) {
+			else if(player.getLX()==player.getBackX()[0][i] && player.getLY()==player.getBackX()[1][i] && player.getLlife()>0) {
 				vue.affiche("Tu es chanceux! (une vie en moins) ");
 				player.setLlife(player.getLlife()-1);
 				

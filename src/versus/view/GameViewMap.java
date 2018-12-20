@@ -42,7 +42,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 	NetworkController networkController;	
 	private JFrame f;
     private final JPanel gui = new JPanel(new BorderLayout(1, 1));
-    private JButton[][] BoardSquares = new JButton[11][11];
+    private JButton[][] BoardSquares = new JButton[15][15];
     private JPanel Board;
     private JButton checkNetwork = new JButton();
     private JButton life = new JButton();
@@ -123,7 +123,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         tools.add(moveB);
         tools.add(moveLabel);
         gui.add(new JLabel(""), BorderLayout.LINE_START);
-        Board = new JPanel(new GridLayout(0, 12));
+        Board = new JPanel(new GridLayout(0, 16));
         Board.setBorder(new LineBorder(Color.BLACK));
         gui.add(Board);
         
@@ -143,7 +143,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         			} 
             	}
             	BoardSquares[jj][ii].addMouseListener(this);
-            	if(jj==0 || jj==10) {
+            	if(jj==0 || jj==14) {
             		BoardSquares[jj][ii].setBackground(Color.RED);
             	} else {
             		BoardSquares[jj][ii].setBackground(Color.WHITE);
@@ -153,12 +153,12 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         }
         update(null,null);
         Board.add(new JLabel(""));
-        for (int ii = 0; ii < 11; ii++) {
+        for (int ii = 0; ii < BoardSquares[0].length; ii++) {
             Board.add(new JLabel("" + (ii + 1),
             SwingConstants.CENTER));
         }
-        for (int ii = 0; ii < 11; ii++) {
-        	for (int jj = 0; jj < 11; jj++) {
+        for (int ii = 0; ii < BoardSquares[0].length; ii++) {
+        	for (int jj = 0; jj < BoardSquares[0].length; jj++) {
         		switch (jj) {
         			case 0:
     				Board.add(new JLabel("" + (ii + 1),

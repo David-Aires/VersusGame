@@ -18,7 +18,7 @@ import versus.model.PlayerModel;
  */
 public class GameViewConsole extends GameView {
 	protected Scanner sc;
-	private  String [][] board= new String[11][11];
+	private  String [][] board= new String[15][15];
 	
 	@Override
 	public void update(Observable o, Object arg) {
