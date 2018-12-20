@@ -57,7 +57,7 @@ public class CharacterController {
 	public void isTrapped(){
 		for(int i=0;i<player.getTrap()[0].length;i++) {
 			if(player.getLX()==player.getTrap()[0][i] && player.getLY()==player.getTrap()[1][i] && player.getLlife()==0){
-				mouvementLocal(0,5,0);
+				mouvementLocal(0,7,0);
 				vue.affiche("Vous êtes tombés dans un piège(!Retenez son emplacement!)");
 			}
 			
