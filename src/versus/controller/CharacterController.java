@@ -118,7 +118,7 @@ public class CharacterController {
 			player.mouvementsLocal(x, y, move);
 			checkTrap();
 			isBonus();
-			if(player.getLX()==x && player.getLY()==y) {
+			if(player.getLX()==x && player.getLY()==y && player.getLMoving()!=0) {
 				player.setLMoving(player.getLMoving()-1);
 			}
 			controllerNetwork.sendMove();
