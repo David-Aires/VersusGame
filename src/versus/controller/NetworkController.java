@@ -119,9 +119,15 @@ public class NetworkController  {
 	}
 		
 	// return the good x for the other player in the network
-		public int changeLocalXForNetwork(){
-			return 10-player.getLX();
-		}
+	public int changeLocalXForNetwork(){
+		return 14-player.getLX();
+	}
+	
+	// return the good y for the other player in the network
+	public int changeLocalYForNetwork(){
+	
+		return 14-player.getLY();
+	}
 	
 		
 		
@@ -131,7 +137,7 @@ public class NetworkController  {
 			//pour l'autre joueur tu passes de
 			//11, 6 à 10, 6
 		
-				out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving());
+				out.println(changeLocalXForNetwork() +"/"+changeLocalYForNetwork()+"/"+player.getLMoving());
 				out.flush();
 				
 			}
