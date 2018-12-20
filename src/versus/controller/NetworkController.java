@@ -123,11 +123,7 @@ public class NetworkController  {
 		return 14-player.getLX();
 	}
 	
-	// return the good y for the other player in the network
-	public int changeLocalYForNetwork(){
 	
-		return 14-player.getLY();
-	}
 	
 		
 		
