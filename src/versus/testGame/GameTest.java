@@ -3,6 +3,8 @@
  */
 package versus.testGame;
 
+import javax.swing.JOptionPane;
+
 import versus.controller.CharacterController;
 import versus.controller.NetworkController;
 import versus.model.PlayerModel;
@@ -17,14 +19,32 @@ import versus.view.GameViewMap;
 public class GameTest {
 	static boolean isServer;
 	
+	public boolean openSession(){
+		JOptionPane jop = new JOptionPane();
+	    String nom = jop.showInputDialog(null, "Serveur(1) ou client(2) ?", "Ouverture de session", JOptionPane.QUESTION_MESSAGE);
+	    
+	    //serveur
+	    if(Integer.parseInt(nom)==1){
+	    	return true;
+	    }
+	    //client
+	    else if(Integer.parseInt(nom)==2){
+		return false;
+	    }
+		return true;
+	    
+	    
+		}
 	public GameTest() {
 		//Creation of model 
 		PlayerModel player = new PlayerModel();
 		
 		
+		 
+		
 		//Creation of controllers : one for each view	
 		//Each controller must have a reference to the model in order to be able to order it
-		NetworkController GameControlNetwork= new NetworkController(player,isServer) ;
+		NetworkController GameControlNetwork= new NetworkController(player,openSession()) ;
 		CharacterController GamecontrolConsole = new CharacterController(player, GameControlNetwork);
 		CharacterController GamecontrolMap = new CharacterController(player, GameControlNetwork);
 		
@@ -39,9 +59,13 @@ public class GameTest {
 	}
 	
 	public static void main(String args[]) {
+		
+		
+	    
 		//Schedule a job for the event-dispatching thread:
 		//Creating and showing this application's GUI.
-		isServer = (args[0].equals("true")? true : false);
+		
+		//isServer = (args[0].equals("true")? true : false);
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new GameTest();
