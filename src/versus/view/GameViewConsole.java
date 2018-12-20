@@ -86,7 +86,7 @@ public class GameViewConsole extends GameView {
 						case "tp" :
 						int i = sc.nextInt();
 						int a= sc.nextInt();
-						if(i<0 || i> 11 || a<0 || a>11){
+						if(i<0 || i> 15 || a<0 || a>15){
 							affiche("Emplacement incorrect");
 							printHelp(); 
 							break;
