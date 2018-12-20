@@ -79,7 +79,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
     public void actionPerformed(ActionEvent e){
     	if(e.getSource()== reset){
     		f.dispose();
-    		controller.mouvementLocal(0, 5,1);
+    		controller.mouvementLocal(0, 7,1);
     		new GameViewMap(player,controller,networkController);
     	}
     }
