@@ -137,7 +137,7 @@ public class NetworkController  {
 			//pour l'autre joueur tu passes de
 			//11, 6 à 10, 6
 		
-				out.println(changeLocalXForNetwork() +"/"+changeLocalYForNetwork()+"/"+player.getLMoving());
+				out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving());
 				out.flush();
 				
 			}
