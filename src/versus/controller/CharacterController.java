@@ -18,15 +18,17 @@ import versus.view.GameViewMap;
  */
 public class CharacterController {
 	/**
-	 * (?)
+	 * PlayerModel contains all the methods and variables which
+	 * are linked to the player in the game
 	 */
 	PlayerModel player;
 	/**
-	 * (?)
+	 * The GameView is the abstract class 
+	 * of GameViewMap and GameViewConsole
 	 */
 	GameView vue;
 	/**
-	 * (?)
+	 * GameViewMap shows the GUI
 	 */
 	GameViewMap vueGUI;
 	/**
