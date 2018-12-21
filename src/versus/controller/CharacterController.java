@@ -143,7 +143,7 @@ public class CharacterController {
 	}
 
 	/**
-	 * This method "call all check trap" (?).
+	 * This method checks all the different traps" 
 	 */
 	public void checkTrap() {
 		goBackX();
@@ -153,8 +153,8 @@ public class CharacterController {
 
 	/**
 	 * This constructor creates the Character controller using player & networkController.
-	 * @param player (?)
-	 * @param controllerNetwork (?)
+	 * @param player the model of the player
+	 * @param controllerNetwork the class which creates and manage the network
 	 */
 	public CharacterController(PlayerModel player, NetworkController networkController) {
 		this.player=player;
@@ -162,8 +162,8 @@ public class CharacterController {
 	}
 	
 	/**
-	 * This method (?)
-	 * @param vue (?)
+	 * This method is used to add views (as console and GUI for our case)
+	 * @param vue the abstract class GameView
 	 */
 	public void addview(GameView vue) {
 		this.vue=vue;
