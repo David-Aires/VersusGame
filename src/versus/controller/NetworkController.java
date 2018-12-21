@@ -140,12 +140,14 @@ public class NetworkController  {
 		checkStatus.start();
 		try {
 			if(isServer) {
+					player.setLMoving(1);
 					socketserver = new ServerSocket(2009);
 					socketduserver = socketserver.accept();
 					in = new BufferedReader (new InputStreamReader (socketduserver.getInputStream()));
 					out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socketduserver.getOutputStream())),true);
 			} 
 			else {
+				player.setLMoving(0);
 				socketclient = new Socket(InetAddress.getLocalHost(),2009);
 				 in = new BufferedReader (new InputStreamReader (socketclient.getInputStream()));
 				 out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socketclient.getOutputStream())),true);
