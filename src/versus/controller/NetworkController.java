@@ -36,58 +36,64 @@ import versus.view.GameViewMap;
  */
 public class NetworkController  {
 	/**
-	 * (?)
+	 * PlayerModel contains all the methods and variables which
+	 * are linked to the player in the game
 	 */
 	PlayerModel player;
 	/**
-	 * (?)
+	 * The GameView is the abstract class 
+	 * of GameViewMap and GameViewConsole
 	 */
 	GameView vue;
 	/**
-	 * (?)
+	 * GameViewMap shows the GUI
 	 */
 	GameViewMap vueCarte;
 	/**
-	 * (?)
+	 * CharacterController makes the moves and the actions
+	 * in function of what happens in the game 
 	 */
 	CharacterController controller;
 	/**
-	 * (?)
+	 * It will contain the address of the users
 	 */
 	private InetAddress inet = null;
 	/**
-	 * (?)
+	 * This thread will tell if one user is disconnected
 	 */
 	private Thread checkStatus = new Thread(new CheckNetwork());
 	/**
-	 * (?)
+	 *This thread will receive the moves from the other player 
 	 */
 	private Thread receiveMove = new Thread(new receiveMove());
 	/**
-	 * (?)
+	 * it will be used to know if 
+	 * the user is the future server or the future client
 	 */
 	private boolean isServer;
 	/**
-	 * (?)
+	 * it's the socket for the server(which is also a client)
 	 */
 	ServerSocket socketserver  ;
 	/**
-	 * (?)
+	 * it's the future accepted socket for the server(which is also a client)
 	 */
     Socket socketduserver ;
     /**
-	 * (?)
+	 * it's the socket for the client
 	 */
     Socket socketclient;
     /**
-	 * (?)
+	 * to see what data will be received
 	 */
     BufferedReader in;
     /**
-	 * (?)
+	 * to send data in the network
 	 */
     PrintWriter out;
-    
+    /*
+     * this method checks the bonus when it's taken by one player
+     */
     public void checkBonus() {
     	for(int i=0;i<player.getBonus().get(0).size();i++) {
 			if(player.getRX()== player.getBonus().get(0).get(i) && player.getRY()==player.getBonus().get(1).get(i)) {
@@ -97,12 +103,18 @@ public class NetworkController  {
     	}
     }
     
+    /*
+     * method to reset the game, it's like one player gave up.
+     */
     public void sendResign() {
     	out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving()+"/"+1);
 		out.flush();
 		player.setHaveLose(true);
     }
     
+    /*
+     * method to know when the player lose
+     * */
     public void isLose() {
     	if(player.getRX()==0) {
     		player.setHaveLose(true);
@@ -110,9 +122,10 @@ public class NetworkController  {
     }
     
     /**
-	 * This method (?).
-	 * @param player (?)
-	 * @param isServer (?)
+	 * This constructor creates a network using the model of the player and 
+	 * the boolean isServer (to know if it is the client or the server who wants to connect)
+	 * @param player the model of the player
+	 * @param isServer the boolean to know if it is the client or the server who wants to connect
 	 */
 	public NetworkController(PlayerModel player, boolean isServer) {
 		this.player=player;
@@ -148,7 +161,7 @@ public class NetworkController  {
 
 	
 	/**
-	 * This method (?).
+	 * This thread is used to receive the moves of the opponents.
 	 */
 	public class receiveMove implements Runnable{
 		GameView vue;
@@ -184,8 +197,11 @@ public class NetworkController  {
 	}
 		
 	/**
-	 * This method return the good X coordinates for the other player in the network.
-	 * @return 14-player.getLX()
+	 * This method return the good X
+	 *  knowing that both players consider themselves 
+	 *  as local players starting in x=0 and y=7
+	 * @return the good position for the opponent
+	 * 
 	 */ 
 	public int changeLocalXForNetwork(){
 		return 14-player.getLX();
@@ -195,16 +211,17 @@ public class NetworkController  {
 	 * This method send the appropriate X and Y coordinates to the other player.
 	 */ 
 	public void sendMove() {
-		//si tu passes en local 
-		//de 1, 6 à 2, 6 ( x=1,y=5)
-		//pour l'autre joueur tu passes de
-		//11, 6 à 10, 6
+		//for example
+		//if you move in local 
+				//from 1, 6 to 2, 6 ( x=1,y=5)
+				//For the other player you go from
+				//11, 6 to 10, 6
 		out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving()+"/"+0);
 		out.flush();	
 	}
 			
 	/**
-	 * This method send pings to the network player to check if the link is up.
+	 * This thread checks if the 2 players are well connected
 	 */ 
 	private class CheckNetwork implements Runnable {
 		@Override
