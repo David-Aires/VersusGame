@@ -7,6 +7,7 @@ package versus.testGame;
  * This imported class is used to provides simple ways to create modal elemental dialogs.
  */
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import versus.controller.CharacterController;
 import versus.controller.NetworkController;
@@ -29,19 +30,24 @@ public class GameTest {
 	 * @return (?)
 	 */
 	public boolean openSession(){
+		UIManager.put("OptionPane.noButtonText", "Serveur");
+	    UIManager.put("OptionPane.yesButtonText", "Client");
 		JOptionPane jop = new JOptionPane();
-	    String nom = jop.showInputDialog(null, "Serveur(1) ou client(2) ?", "Ouverture de session", JOptionPane.QUESTION_MESSAGE);
+	    int nom = jop.showConfirmDialog(null, "Démarrer en quel mode?", "Ouverture de session",JOptionPane.YES_NO_OPTION ,JOptionPane.QUESTION_MESSAGE);
+	    
 	    
 	    //serveur
-	    if(Integer.parseInt(nom)==1){
+	    if(nom==JOptionPane.NO_OPTION){
 	    	return true;
 	    }
 	    //client
-	    else if(Integer.parseInt(nom)==2){
+	    else if(nom==JOptionPane.YES_OPTION){
 		return false;
 	    }
-		return true;    
-	}
+		return true;
+	    
+	    
+		}
 	
 	/**
 	 * This constructor creates the Game Test.
