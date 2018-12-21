@@ -1,18 +1,36 @@
 /**
- * 
+ * (?).
  */
 package versus.model;
 
 /**
+ * This class represents the Character Model.
  * @author Aires David
- *
  */
 public class CharacterModel {
+	/**
+	 * The character X coordinate
+	 */
 	private int x= 300;
+	/**
+	 * The character Y coordinate
+	 */
 	private int y= 300;
+	/**
+	 * The character moving ability
+	 */
 	private int moving= 1;
+	/**
+	 * The character extra-life
+	 */
 	private int life= 0;
 
+	/**
+	 * This method (?).
+	 * @param x (?)
+	 * @param y (?)
+	 * @param moving (?)
+	 */
 	public void mouvement(int x,int y,int moving) {
 		this.x=x;
 		this.y=y;
@@ -20,55 +38,73 @@ public class CharacterModel {
 	}
 	
 	/**
-	 * @return the x
+	 * This getter allow the user to get the X coordinate.
+	 * @return x the X coordinate
 	 */
 	public int getX() {
 		return x;
 	}
 	
 	/**
-	 * @param x the x to set
+	 * This setter allow the user to set the X coordinate.
+	 * @param x The X coordinate
 	 */
 	public void setX(int x) {
 		this.x = x;
 	}
 	
 	/**
-	 * @return the y
+	 * This getter allow the user to get the Y coordinate.
+	 * @param y The Y coordinate
 	 */
 	public int getY() {
 		return y;
 	}
 	
 	/**
-	 * @param y the y to set
+	 * This setter allow the user to set the Y coordinate.
+	 * @param y The Y coordinate
 	 */
 	public void setY(int y) {
 		this.y = y;
 	}
 
 	/**
-	 * @return the movingCollision
+	 * This method return the "movingCollision" (?).
+	 * @return moving The movingCollision (?)
 	 */
 	public int isMoving() {
 		return moving;
 	}
 	
 	/**
-	 * @param movingCollision the movingCollision to set
+	 * This setter allow the user to set the movingCollision.
+	 * @param moving The movingCollision
 	 */
 	public void setMoving(int moving){
 		this.moving= moving;
 	}
 	
+	/**
+	 * This getter allow the user to get the number of Extra-life of the player.
+	 * @return life The number of Extra-life of the player
+	 */
 	public int getLife() {
 		return this.life;
 	}
 	
+	/**
+	 * This setter allow the user to set the number of Extra-life of the player.
+	 * @param life The number of Extra-life of the player
+	 */
 	public void setLife(int life) {
 		this.life= life;
 	}
 	
+	/**
+	 * This method gives a textual representation of the state of the player.
+	 * @return str The string of the state of the player
+	 */
 	public String toString() {
 		String str="";
 		str+= "\nCoordonnée X: "+(this.x+1);

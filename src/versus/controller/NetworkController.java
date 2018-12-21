@@ -1,5 +1,11 @@
+/**
+ * (?)
+ */
 package versus.controller;
 
+/**
+ * This imported class is used to create object having a graphical representation that can be displayed on the screen and that can interact with the user.
+ */
 import java.awt.Component;
 
 import java.io.BufferedReader;
@@ -25,24 +31,68 @@ import versus.view.GameView;
 import versus.view.GameViewMap;
 
 /**
+ * This class represents the Character Controller.
  * @author Quentin Lebrun
- *
  */
 public class NetworkController  {
+	/**
+	 * (?)
+	 */
 	PlayerModel player;
+	/**
+	 * (?)
+	 */
 	GameView vue;
+	/**
+	 * (?)
+	 */
 	GameViewMap vueCarte;
+	/**
+	 * (?)
+	 */
 	CharacterController controller;
+	/**
+	 * (?)
+	 */
 	private InetAddress inet = null;
+	/**
+	 * (?)
+	 */
 	private Thread checkStatus = new Thread(new CheckNetwork());
+	/**
+	 * (?)
+	 */
 	private Thread receiveMove = new Thread(new receiveMove());
+	/**
+	 * (?)
+	 */
 	private boolean isServer;
+	/**
+	 * (?)
+	 */
 	ServerSocket socketserver  ;
+	/**
+	 * (?)
+	 */
     Socket socketduserver ;
+    /**
+	 * (?)
+	 */
     Socket socketclient;
+    /**
+	 * (?)
+	 */
     BufferedReader in;
+    /**
+	 * (?)
+	 */
     PrintWriter out;
-	
+    
+    /**
+	 * This method (?).
+	 * @param player (?)
+	 * @param isServer (?)
+	 */
 	public NetworkController(PlayerModel player, boolean isServer) {
 		this.player=player;
 		this.isServer=isServer;
@@ -76,6 +126,9 @@ public class NetworkController  {
 		receiveMove.start();
 	}	
 	
+	/**
+	 * This method (?).
+	 */
 	public void closeNetwork() throws IOException {
 		socketclient.close();
 		socketserver.close();
@@ -84,6 +137,9 @@ public class NetworkController  {
 		out.close();
 	}
 	
+	/**
+	 * This method (?).
+	 */
 	public class receiveMove implements Runnable{
 		@Override
 		public void run() {
@@ -118,27 +174,29 @@ public class NetworkController  {
 		}
 	}
 		
-	// return the good x for the other player in the network
+	/**
+	 * This method return the good X coordinates for the other player in the network.
+	 * @return 14-player.getLX()
+	 */ 
 	public int changeLocalXForNetwork(){
 		return 14-player.getLX();
 	}
 	
-	
-	
-		
-		
-		public void sendMove() {
-			//si tu passes en local 
-			//de 1, 6 à 2, 6 ( x=1,y=5)
-			//pour l'autre joueur tu passes de
-			//11, 6 à 10, 6
-		
-				out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving());
-				out.flush();
-				
-			}
+	/**
+	 * This method send the appropriate X and Y coordinates to the other player.
+	 */ 
+	public void sendMove() {
+		//si tu passes en local 
+		//de 1, 6 à 2, 6 ( x=1,y=5)
+		//pour l'autre joueur tu passes de
+		//11, 6 à 10, 6
+		out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving());
+		out.flush();	
+	}
 			
-	// thread pings the network player to check if he is here
+	/**
+	 * This method send pings to the network player to check if the link is up.
+	 */ 
 	private class CheckNetwork implements Runnable {
 		@Override
 		public void run() {

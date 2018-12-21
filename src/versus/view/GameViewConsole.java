@@ -1,8 +1,11 @@
 /**
- * 
+ * (?).
  */
 package versus.view;
 
+/**
+ * This imported class is used to indicate that the token retrieved does not match the pattern for the expected type, or that the token is out of range for the expected type.
+ */
 import java.util.InputMismatchException;
 
 import java.util.Observable;
@@ -13,23 +16,44 @@ import versus.controller.NetworkController;
 import versus.model.PlayerModel;
 
 /**
+ * This class represents the Game View Console.
  * @author Aires David, Quentin Lebrun
- *
  */
 public class GameViewConsole extends GameView {
+	/**
+	 * (?)
+	 */
 	protected Scanner sc;
-	private  String [][] board= new String[15][15];
+	/**
+	 * (?)
+	 */
+	private String [][] board= new String[15][15];
 	
+	/**
+	 * This method (?).
+	 * @param o (?)
+	 * @param arg (?)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println(player);
 		initBoard();
 	}
 	
+	/**
+	 * This method display (?).
+	 * @param string (?)
+	 */
 	public void affiche(String string) {
 		System.out.println(string);
 	}
 		
+	/**
+	 * This constructor creates the Game View Console.
+	 * @param player (?)
+	 * @param controller (?)
+	 * @param networkController (?)
+	 */
 	public GameViewConsole(PlayerModel player,CharacterController controller, NetworkController networkController) {
 		super(player,controller,networkController);
 		update(null,null);
@@ -37,7 +61,10 @@ public class GameViewConsole extends GameView {
 		new Thread (new ReadInput()).start();
 	}
  
-	private  void initBoard() {
+	/**
+	 * This method creates the board.
+	 */
+	private void initBoard() {
 		for(int j=0;j<board.length;j++) {
 			for(int i=0;i<board.length;i++) {
 				board[j][i]= "[   ]";
@@ -51,6 +78,9 @@ public class GameViewConsole extends GameView {
 		printHelp();
 	}
 	
+	/**
+	 * This method display the controls.
+	 */
 	private void printHelp(){
 		printBoard();
 		affiche("Pour se téléporter : tp + coordX + coordY");
@@ -61,7 +91,10 @@ public class GameViewConsole extends GameView {
 		affiche("O : Ouest");
 	}
 
-	public  void printBoard() {     
+	/**
+	 * This method display the board.
+	 */
+	public void printBoard() {     
 		System.out.println();
     	for (int i = 0; i < board.length; i++) {
     		System.out.println();
@@ -72,6 +105,9 @@ public class GameViewConsole extends GameView {
         }
     }
 	
+	/**
+	 * This method read the inputs of the player.
+	 */
 	private class ReadInput implements Runnable{
 		public void run() {
 			while(true){

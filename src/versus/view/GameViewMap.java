@@ -1,8 +1,11 @@
 /**
- * 
+ * (?).
  */
 package versus.view;
 
+/**
+ * This imported class is used to lays out a container, arranging and resizing its components to fit in five regions: north, south, east, west, and center.
+ */
 import java.awt.BorderLayout;
 
 import java.awt.Color;
@@ -35,47 +38,125 @@ import versus.controller.NetworkController;
 import versus.model.PlayerModel;
 
 /**
+ * This class represents the Game View Map.
  *@author Aires David, Quentin Lebrun
- *
  */
 public class GameViewMap extends GameView  implements ActionListener, MouseListener {
+	/**
+	 * (?)
+	 */
 	NetworkController networkController;	
+	/**
+	 * (?)
+	 */
 	private JFrame f;
+	/**
+	 * (?)
+	 */
     private final JPanel gui = new JPanel(new BorderLayout(1, 1));
+    /**
+	 * (?)
+	 */
     private JButton[][] BoardSquares = new JButton[15][15];
+    /**
+	 * (?)
+	 */
     private JPanel Board;
+    /**
+	 * (?)
+	 */
     private JButton checkNetwork = new JButton();
+    /**
+	 * (?)
+	 */
     private JButton life = new JButton();
+    /**
+	 * (?)
+	 */
     private JLabel lifeLabel = new JLabel(": "+Integer.toString(player.getLlife()));
+    /**
+	 * (?)
+	 */
     private JButton moveB = new JButton();
+    /**
+	 * (?)
+	 */
     private JLabel moveLabel = new JLabel(": "+Integer.toString(player.getLMoving()));
+    /**
+	 * (?)
+	 */
     private final JLabel message = new JLabel("Connexion State");
+    /**
+	 * (?)
+	 */
     JToolBar tools= new JToolBar();
+    /**
+	 * (?)
+	 */
     private JButton reset;
+    /**
+	 * (?)
+	 */
     private Thread MessageBox;
+    /**
+	 * (?)
+	 */
     private String Message;
+    /**
+	 * (?)
+	 */
     private int lastLocalX= 0;
+    /**
+	 * (?)
+	 */
     private int lastLocalY= 0;
+    /**
+	 * (?)
+	 */
     private int lastNetworkX= 0;
+    /**
+	 * (?)
+	 */
     private int lastNetworkY= 0;
+    /**
+	 * (?)
+	 */
     JOptionPane jop = new JOptionPane();
+    /**
+	 * (?)
+	 */
     ImageIcon playerLocalImage= new ImageIcon("resource/Player1.png");
+    /**
+	 * (?)
+	 */
     ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+    /**
+	 * (?)
+	 */
     ImageIcon playerNetworkImage= new ImageIcon("resource/Player2.png");
+    /**
+	 * (?)
+	 */
     ImageIcon bonusImage= new ImageIcon("resource/Bonus.png");
     
+    /**
+	 * This method update the number of life.
+	 */
     public void updateLife() {
-		//update number of life and number of move
         lifeLabel.setText(": "+Integer.toString(player.getLlife()));
-        
 	}
 	
-	
+    /**
+	 * This method update the number of move.
+	 */
 	public void updateMove() {
 		moveLabel.setText(": "+Integer.toString(player.getLMoving()));
-		
 	}
 	
+	/**
+	 * This method (?).
+	 * @param e (?)
+	 */
     public void actionPerformed(ActionEvent e){
     	if(e.getSource()== reset){
     		f.dispose();
@@ -83,11 +164,15 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
     		new GameViewMap(player,controller,networkController);
     	}
     }
-    
+    /**
+	 * This constructor creates the Game view Map.
+	 * @param player (?)
+	 * @param controller (?)
+	 * @param networkController (?)
+	 */
 	public GameViewMap(PlayerModel player,CharacterController controller, NetworkController networkController) {
 		super(player,controller,networkController);
 		gui.setBorder(new EmptyBorder(1, 1, 1, 1));
-		
 		tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
@@ -99,9 +184,6 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         checkNetwork.setBorderPainted(false);
         reset.addActionListener(this);
         tools.addSeparator();
-         
-       
-        
         tools.addSeparator();
         tools.add(message);
         tools.add(checkNetwork);
@@ -126,10 +208,6 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         Board = new JPanel(new GridLayout(0, 16));
         Board.setBorder(new LineBorder(Color.BLACK));
         gui.add(Board);
-        
-    	
-    	
-        
         //create all the buttons
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int ii = 0; ii < BoardSquares.length; ii++) {
@@ -148,7 +226,6 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
             	} else {
             		BoardSquares[jj][ii].setBackground(Color.WHITE);
             	}
-            	
             }
         }
         update(null,null);
@@ -178,6 +255,11 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         f.setVisible(true);
 	}
 
+	/**
+	 * This method (?).
+	 * @param o (?)
+	 * @param arg (?)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		//display the local player icon
@@ -185,13 +267,11 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 		lastLocalX=player.getLX();
 		lastLocalY= player.getLY();
     	BoardSquares[lastLocalX][lastLocalY].setIcon(playerLocalImage);
-        
 		//display the network player icon
         BoardSquares[lastNetworkX][lastNetworkY].setIcon(icon);
 		lastNetworkX=player.getRX();
 		lastNetworkY= player.getRY();
         BoardSquares[lastNetworkX][lastNetworkY].setIcon(playerNetworkImage);
-  
         //update button status connection
         if(player.getIsConnected()) {
         	 checkNetwork.setText("UP");
@@ -203,9 +283,12 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         }
         updateLife();
         updateMove();
-        
 	}
 
+	/**
+	 * This method (?).
+	 * @param string (?)
+	 */
 	@Override
 	public void affiche(String string) {
 		Message = string;
@@ -213,45 +296,65 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 		MessageBox.start();
 	}
 
+	/**
+	 * This method (?).
+	 * @param e (?)
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		//get the X and Y position of the button with the name
 		String[] temp = (((Component) e.getSource()).getName()).split("/");
 		int tempX =Integer.parseInt(temp[0]);
 		int tempY =Integer.parseInt(temp[1]);
-	
 		//check if the X move is +1 or -1 if it's move the local player to X click position
 		if((tempX==(player.getLX()+1) || (tempX==player.getLX()-1)) && tempY==player.getLY() ) {
 			controller.mouvementLocal(tempX, player.getLY(),1);
 		}
-		
 		//check if the Y move is +1 or -1 if it's move the local player to Y click position
 		if((tempY==(player.getLY()+1) || (tempY==player.getLY()-1)) && tempX==player.getLX() ) {
 			controller.mouvementLocal(player.getLX(),tempY,1);
 		}
 	}
 	
-
+	/**
+	 * This method (?).
+	 * @param e (?)
+	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * This method (?).
+	 * @param e (?)
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * This method (?).
+	 * @param e (?)
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub	
 	}
 
+	/**
+	 * This method (?).
+	 * @param e (?)
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}	
 	
+	/**
+	 * This (?).
+	 */
 	private class MessageBox implements Runnable{
 		@Override
 		public void run() {
