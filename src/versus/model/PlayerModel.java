@@ -36,21 +36,19 @@ public class PlayerModel extends Observable {
 	//for example 9,6 IS EQUAL TO 10,7 in X,Y  
 	//the part[0][x] is for the position in x of the traps
 	//the part[1][y] is for the position in y of the traps
-	//yellow
 	/**
-	 * (?)
+	 * all the positions of a simple trap
 	 */
-	private int [][]trap={{0,0,1,2,6,8,9,9,10},{0,14,9,2,14,3,6,10,5}};
+	private int [][]trap={{0,0,1,2,6,8,9,9,10,12},{0,14,9,2,14,3,6,10,5,11}};
 	//purple
 	/**
-	 * (?)
+	 * all the positions of the trap back in X
 	 */
-	private int [][] backInX={{2,2,3,3,4,4,6,6,8,9,9,11,12,12,13,13,13,13,13},{5,10,3,7,13,11,3,6,1,14,7,12,3,8,11,13,14,0,4}};
-	//magenta
+	private int [][] backInX={{2,2,3,3,4,4,4,6,6,6,6,8,8,9,9,11,12,12,12,13,13,13,13,13,13},{5,10,3,7,13,11,8,0,9,3,6,1,13,14,7,12,3,8,6,11,13,14,0,4,10}};
 	/**
-	 * (?)
+	 * all the positions of the trap back in Y
 	 */
-	private int [][] backInY={{0,1,2,3,4,4,5,6,6,6,8,8,13},{6,6,12,0,5,10,8,2,5,11,7,11,7}};
+	private int [][] backInY={{0,1,2,3,4,4,5,6,6,6,8,8,9,9,10,10,13},{6,6,12,0,5,10,8,2,5,11,7,11,9,2,4,12,7}};
 	
 	//ArrayList with the position of a bonus on the board
 	/**
@@ -60,11 +58,12 @@ public class PlayerModel extends Observable {
 	/**
 	 * (?)
 	 */
-	ArrayList<Integer> bonusX = new ArrayList<Integer>(Arrays.asList(1,5,2));
+	ArrayList<Integer> bonusX = new ArrayList<Integer>(Arrays.asList(2,3,3,7,7,7,7,7,11,11,12));
 	/**
 	 * (?)
 	 */
-	ArrayList<Integer> bonusY = new ArrayList<Integer>(Arrays.asList(2,10,9));
+	ArrayList<Integer> bonusY = new ArrayList<Integer>(Arrays.asList(7,4,10,0,3,7,11,14,4,10,7));
+	
 	boolean haveWin= false;
 	boolean haveLose= false;
 	int count=1;
@@ -79,11 +78,11 @@ public class PlayerModel extends Observable {
 		enemyModel.setX(14);
 		enemyModel.setY(7);
 		
-		//ArrayList with the position of a bonus on the board
+		//ArrayList with the positions of bonuses
 		bonus = new ArrayList<>();
-		ArrayList<Integer> bonusX = new ArrayList<Integer>(Arrays.asList(1,5,2));
-		ArrayList<Integer> bonusY = new ArrayList<Integer>(Arrays.asList(2,10,9));
-		
+		ArrayList<Integer> bonusX = new ArrayList<Integer>(Arrays.asList(2,3,3,7,7,7,7,7,11,11,12));
+		ArrayList<Integer> bonusY = new ArrayList<Integer>(Arrays.asList(7,4,10,0,3,7,11,14,4,10,7));
+				
 		//init arrayList of bonus
 		this.bonus.add(bonusX);
 		this.bonus.add(bonusY);
