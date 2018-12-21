@@ -65,6 +65,47 @@ public class PlayerModel extends Observable {
 	 * (?)
 	 */
 	ArrayList<Integer> bonusY = new ArrayList<Integer>(Arrays.asList(2,10,9));
+	boolean haveWin= false;
+	boolean haveLose= false;
+	int count=1;
+	
+	public void init() {
+		
+		//init position of the local player
+		plocalModel.setX(0);
+		plocalModel.setY(7);
+		
+		//init position of the network player
+		enemyModel.setX(14);
+		enemyModel.setY(7);
+		
+		//ArrayList with the position of a bonus on the board
+		bonus = new ArrayList<>();
+		ArrayList<Integer> bonusX = new ArrayList<Integer>(Arrays.asList(1,5,2));
+		ArrayList<Integer> bonusY = new ArrayList<Integer>(Arrays.asList(2,10,9));
+		
+		//init arrayList of bonus
+		this.bonus.add(bonusX);
+		this.bonus.add(bonusY);
+		
+		
+		
+		
+		
+		//force update viewConsole if the player restart the game
+		if(count==0) {
+			this.haveLose= false;
+			this.haveWin= false;
+			plocalModel.setLife(0);
+			count++;
+		}
+		count--;
+	}
+	
+	public void updateAll() {
+		setChanged();
+		notifyObservers();
+	}
 	
 	/**
 	 * This constructor creates the Player Model.
@@ -72,17 +113,12 @@ public class PlayerModel extends Observable {
 	public PlayerModel() {
 		// init the local player and the position
 		plocalModel= new CharacterModel();
-		plocalModel.setX(0);
-		plocalModel.setY(7);
 		
 		//init the network player and the position
 		enemyModel= new CharacterModel();
-		enemyModel.setX(14);
-		enemyModel.setY(7);
 		
-		//init arrayList of bonus
-		this.bonus.add(bonusX);
-		this.bonus.add(bonusY);
+		
+		init();
 		
 	}
 	
@@ -95,8 +131,7 @@ public class PlayerModel extends Observable {
 	public void mouvementsLocal(int x,int y,int moving) {
 		if(x!=plocalModel.getX() || y!=plocalModel.getY()) {
 			plocalModel.mouvement(x, y,moving);
-			setChanged();
-			notifyObservers();
+			updateAll();
 		}
 	}
 
@@ -113,8 +148,7 @@ public class PlayerModel extends Observable {
 			if(Rmoving==0) {
 				plocalModel.setMoving(1);
 			}
-			setChanged();
-			notifyObservers();
+			updateAll();
 		}
 	}
 	
@@ -160,8 +194,7 @@ public class PlayerModel extends Observable {
 	 */
 	public void setLMoving(int moving){
 		this.plocalModel.setMoving(moving);
-		setChanged();
-		notifyObservers();
+		updateAll();
 	}
 	
 	/**
@@ -219,8 +252,7 @@ public class PlayerModel extends Observable {
 	public void setIsConnected(boolean isConnected) {
 		if(this.isConnected != isConnected) {
 			this.isConnected= isConnected;
-			setChanged();
-			notifyObservers();
+			updateAll();
 		}
 	}
 	
@@ -278,7 +310,24 @@ public class PlayerModel extends Observable {
 	 */
 	public void setLlife(int life) {
 		plocalModel.setLife(life);
-		setChanged();
-		notifyObservers();
+		updateAll();
+	}
+	
+	public void setHaveWin(boolean haveWin) {
+		this.haveWin= haveWin;
+		updateAll();
+	}
+	
+	public boolean getHaveWin() {
+		return this.haveWin;
+	}
+	
+	public boolean getHaveLose() {
+		return this.haveLose;
+	}
+	
+	public void setHaveLose(boolean haveLose) {
+		this.haveLose=haveLose;
+		updateAll();
 	}
 }

@@ -41,6 +41,14 @@ public class CharacterController {
 	 * Creation of the second random number using the random class.
 	 */
 	Random random2 = new Random();
+	
+	
+	public void isWin() {
+		if(player.getLX()==14) {
+			vue.affiche("Vous avez gagné!"+"\nFélicitation!");
+			player.setHaveWin(true);
+		}
+	}
 
 	/**
 	 * This method is a trap.
@@ -176,6 +184,7 @@ public class CharacterController {
 				player.setLMoving(player.getLMoving()-1);
 			}
 			controllerNetwork.sendMove();
+			isWin();
 		} 
 		else if(x==player.getLX() && y==player.getLY() && player.getLMoving()==0){
 			vue.affiche("Collision détectée!");

@@ -139,6 +139,13 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 	 */
     ImageIcon bonusImage= new ImageIcon("resource/Bonus.png");
     
+    
+    public void initGUI() {
+		f.dispose();
+		player.init();
+		new GameViewMap(player,controller,networkController);
+	}
+    
     /**
 	 * This method update the number of life.
 	 */
@@ -159,9 +166,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 	 */
     public void actionPerformed(ActionEvent e){
     	if(e.getSource()== reset){
-    		f.dispose();
-    		controller.mouvementLocal(0, 7,1);
-    		new GameViewMap(player,controller,networkController);
+    		initGUI();
     	}
     }
     /**
@@ -283,6 +288,12 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         }
         updateLife();
         updateMove();
+        
+        
+        //check if local player has lose or win
+        if(player.getHaveWin() || player.getHaveLose()) {
+        	initGUI();
+        }
 	}
 
 	/**
