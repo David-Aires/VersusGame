@@ -14,7 +14,7 @@ import versus.view.GameViewMap;
 
 /**
  * This class represents the Character Controller.
- * @author Aires David
+ * @author Aires David ,Quentin Lebrun
  */
 public class CharacterController {
 	/**
