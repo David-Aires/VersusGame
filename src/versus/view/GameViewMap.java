@@ -389,9 +389,11 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 		public void run() {
 			if(player.getHaveWin()==true) {
 				JOptionPane.showMessageDialog(null, "Vous avez gagné!"+"\nFélicitation!");
+				System.out.println("Vous avez gagné!"+"\nFélicitation!");
 				System.exit(2);
 			} else if(player.getHaveLose()==true) {
 				JOptionPane.showMessageDialog(null, "Vous avez perdu!"+"\nDommage!");
+				System.out.println("Vous avez perdu!"+"\nDommage!");
 				System.exit(2);
 			} else {
 				System.exit(2);

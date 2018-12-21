@@ -88,6 +88,15 @@ public class NetworkController  {
 	 */
     PrintWriter out;
     
+    public void checkBonus() {
+    	for(int i=0;i<player.getBonus().get(0).size();i++) {
+			if(player.getRX()== player.getBonus().get(0).get(i) && player.getRY()==player.getBonus().get(1).get(i)) {
+				player.getBonus().get(0).remove(i);
+				player.getBonus().get(1).remove(i);
+			}
+    	}
+    }
+    
     public void sendResign() {
     	out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving()+"/"+1);
 		out.flush();
@@ -118,14 +127,12 @@ public class NetworkController  {
 		checkStatus.start();
 		try {
 			if(isServer) {
-				System.out.println("je suis un serveur");
 					socketserver = new ServerSocket(2009);
 					socketduserver = socketserver.accept();
 					in = new BufferedReader (new InputStreamReader (socketduserver.getInputStream()));
 					out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socketduserver.getOutputStream())),true);
 			} 
 			else {
-				System.out.println("je suis un client");
 				socketclient = new Socket(InetAddress.getLocalHost(),2009);
 				 in = new BufferedReader (new InputStreamReader (socketclient.getInputStream()));
 				 out = new PrintWriter( new BufferedWriter(new OutputStreamWriter(socketclient.getOutputStream())),true);
@@ -169,6 +176,7 @@ public class NetworkController  {
 					}
 					player.mouvementsEnnemy(position[0], position[1], position[2]);
 					isLose();
+					checkBonus();
 					temp1="";
 				}
 			}	
