@@ -32,7 +32,7 @@ import versus.view.GameViewMap;
 
 /**
  * This class represents the Character Controller.
- * @author Quentin Lebrun
+ * @author Aires David, Quentin Lebrun
  */
 public class NetworkController  {
 	/**
