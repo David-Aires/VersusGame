@@ -30,7 +30,7 @@ public class CharacterController {
 	 */
 	GameViewMap vueGUI;
 	/**
-	 * (?)
+	 * The class that sets up the network connection 
 	 */
 	NetworkController controllerNetwork;
 	/**
@@ -56,8 +56,7 @@ public class CharacterController {
 
 	/**
 	 * This method is a trap.
-	 * If the player has no extra life, he's teleported 2 frames to the "Left/Right/Top/Bottom" (?).
-	 * In the opposite case, he loses a life.
+	 *  The player falls two squares down in x
 	 */
 	public void goBackX(){
 		for(int i=0;i<player.getBackX()[0].length;i++) {
@@ -76,8 +75,7 @@ public class CharacterController {
 		
 	/**
 	 * This method is a trap.
-	 * If the player has no extra life, he's teleported 2 frames to the "Left/Right/Top/Bottom" (?).
-	 * In the opposite case, he loses a life.
+	 * The player falls two squares down in y
 	 */
 	public void goBackY(){
 		for(int i=0;i<player.getBackY()[0].length;i++) {
@@ -96,8 +94,7 @@ public class CharacterController {
 		
 	/**
 	 * This method is a trap.
-	 * If the player has no extra life, he's teleported 2 frames to the "Left/Right/Top/Bottom" (?).
-	 * In the opposite case, he loses a life.
+	 * The player goes back to his position from departure
 	 */
 	public void isTrapped(){
 		for(int i=0;i<player.getTrap()[0].length;i++) {
