@@ -131,7 +131,7 @@ public class CharacterController {
 					break;
 					
 				case 1:
-					int depl = random2.nextInt(3-1 +1);
+					int depl = random2.nextInt(3-1 +1)+1;
 					vue.affiche("Bonus de déplacement: "+depl);
 					player.setLMoving(player.getLMoving()+depl);
 					

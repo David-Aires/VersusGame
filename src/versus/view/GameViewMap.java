@@ -330,11 +330,11 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 		int tempY =Integer.parseInt(temp[1]);
 		//check if the X move is +1 or -1 if it's move the local player to X click position
 		if((tempX==(player.getLX()+1) || (tempX==player.getLX()-1)) && tempY==player.getLY() ) {
-			controller.mouvementLocal(tempX, player.getLY(),1);
+			controller.mouvementLocal(tempX, player.getLY(),player.getLMoving());
 		}
 		//check if the Y move is +1 or -1 if it's move the local player to Y click position
 		if((tempY==(player.getLY()+1) || (tempY==player.getLY()-1)) && tempX==player.getLX() ) {
-			controller.mouvementLocal(player.getLX(),tempY,1);
+			controller.mouvementLocal(player.getLX(),tempY,player.getLMoving());
 		}
 	}
 	

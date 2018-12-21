@@ -133,19 +133,19 @@ public class GameViewConsole extends GameView {
 						}
 						
 						case "E" : 
-						controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY(),0);
+						controller.mouvementLocal((player.getLX()+1<board.length?player.getLX()+1:player.getLX()),player.getLY(),player.getLMoving());
 						break;
 						
 						case "O" : 
-						controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY(),0);
+						controller.mouvementLocal((player.getLX()-1<0?player.getLX():player.getLX()-1),player.getLY(),player.getLMoving());
 						break;
 						
 						case "S" : 
-						controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1),0);
+						controller.mouvementLocal(player.getLX(),(player.getLY()+1>board.length-1?player.getLY():player.getLY()+1),player.getLMoving());
 						break;
 								
 						case "N" : 
-						controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1),0);
+						controller.mouvementLocal(player.getLX(),(player.getLY()-1<0?player.getLY():player.getLY()-1),player.getLMoving());
 						break;
 							
 						default : 
