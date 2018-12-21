@@ -37,6 +37,9 @@ public class CharacterModel {
 		this.moving=moving;
 	}
 	
+	
+	
+	
 	/**
 	 * This getter allow the user to get the X coordinate.
 	 * @return x the X coordinate
@@ -70,16 +73,16 @@ public class CharacterModel {
 	}
 
 	/**
-	 * This method return the "movingCollision" (?).
-	 * @return moving The movingCollision (?)
+	 * This method return the "moving" .
+	 * @return moving 
 	 */
-	public int isMoving() {
+	public int getMoving() {
 		return moving;
 	}
 	
 	/**
 	 * This setter allow the user to set the movingCollision.
-	 * @param moving The movingCollision
+	 * @param moving 
 	 */
 	public void setMoving(int moving){
 		this.moving= moving;
@@ -110,7 +113,6 @@ public class CharacterModel {
 		str+= "\nCoordonnée X: "+(this.x+1);
 		str+= "\nCoordonnée Y: "+(this.y+1);
 		str+= "\nEtat de déplacement: "+this.moving;
-		str+= "\nNombre de Vie: "+this.life;
 		return str;
 	}
 }

@@ -43,9 +43,13 @@ public class CharacterController {
 	Random random2 = new Random();
 	
 	
+	public void Resign() {
+		
+		controllerNetwork.sendResign();
+	}
+	
 	public void isWin() {
 		if(player.getLX()==14) {
-			vue.affiche("Vous avez gagné!"+"\nFélicitation!");
 			player.setHaveWin(true);
 		}
 	}

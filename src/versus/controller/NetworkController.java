@@ -88,6 +88,18 @@ public class NetworkController  {
 	 */
     PrintWriter out;
     
+    public void sendResign() {
+    	out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving()+"/"+1);
+		out.flush();
+		player.setHaveLose(true);
+    }
+    
+    public void isLose() {
+    	if(player.getRX()==0) {
+    		player.setHaveLose(true);
+    	}
+    }
+    
     /**
 	 * This method (?).
 	 * @param player (?)
@@ -126,24 +138,16 @@ public class NetworkController  {
 		receiveMove.start();
 	}	
 	
-	/**
-	 * This method (?).
-	 */
-	public void closeNetwork() throws IOException {
-		socketclient.close();
-		socketserver.close();
-		socketduserver.close();
-		in.close();
-		out.close();
-	}
+
 	
 	/**
 	 * This method (?).
 	 */
 	public class receiveMove implements Runnable{
+		GameView vue;
 		@Override
 		public void run() {
-			int[] position = new int[3];
+			int[] position = new int[4];
 			String temp1= "";
 			while(true) {
 				try {
@@ -153,21 +157,18 @@ public class NetworkController  {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(temp1=="fin") {
-					try {
-						closeNetwork();
-					} 
-					catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} 
-				else if(temp1 !=""){
+				
+				if(temp1 !=""){
 					String[] temp = temp1.split("/");
 					position[0] =(Integer.parseInt(temp[0]));   // position X of the player
 					position[1] =(Integer.parseInt(temp[1]));	// position Y of the player
 					position[2] = (Integer.parseInt(temp[2]));	// number of move
+					position[3] = (Integer.parseInt(temp[3]));  // 0: nothing  1:Win
+					if(position[3]==1) {
+						player.setHaveWin(true);;
+					}
 					player.mouvementsEnnemy(position[0], position[1], position[2]);
+					isLose();
 					temp1="";
 				}
 			}	
@@ -190,7 +191,7 @@ public class NetworkController  {
 		//de 1, 6 à 2, 6 ( x=1,y=5)
 		//pour l'autre joueur tu passes de
 		//11, 6 à 10, 6
-		out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving());
+		out.println(changeLocalXForNetwork() +"/"+player.getLY()+"/"+player.getLMoving()+"/"+0);
 		out.flush();	
 	}
 			

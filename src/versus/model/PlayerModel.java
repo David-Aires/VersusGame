@@ -157,10 +157,12 @@ public class PlayerModel extends Observable {
 	 * @return str The string of (?)
 	 */
 	public String toString() {
-		String str="Joueur local";
+		String str="\n\n\nJoueur local";
 		str+=plocalModel.toString();
+		str+="\nnombre(s) de vie(s): "+plocalModel.getLife();
 		str+="\n\n\nJoueur réseau";
 		str+=enemyModel.toString();
+		str+="\n\n\n";
 		return str;
 	}
 	
@@ -185,7 +187,7 @@ public class PlayerModel extends Observable {
 	 * @return plocalModel.isMoving() The state of moving
 	 */
 	public int getLMoving() {
-		return plocalModel.isMoving();
+		return plocalModel.getMoving();
 	}
 
 	/**
@@ -193,8 +195,11 @@ public class PlayerModel extends Observable {
 	 * @param moving The state of moving
 	 */
 	public void setLMoving(int moving){
-		this.plocalModel.setMoving(moving);
-		updateAll();
+		if(plocalModel.getMoving() !=moving) {
+			this.plocalModel.setMoving(moving);
+			updateAll();
+		}
+		
 	}
 	
 	/**
@@ -218,7 +223,7 @@ public class PlayerModel extends Observable {
 	 * @return enemyModel.isMoving() The state of moving
 	 */
 	public int getRMoving() {
-		return enemyModel.isMoving();
+		return enemyModel.getMoving();
 	}
 	
 	/**
@@ -309,8 +314,10 @@ public class PlayerModel extends Observable {
 	 * @return life The (?) Bonus
 	 */
 	public void setLlife(int life) {
+		if(plocalModel.getLife() !=life) {
 		plocalModel.setLife(life);
 		updateAll();
+		}
 	}
 	
 	public void setHaveWin(boolean haveWin) {
@@ -330,4 +337,6 @@ public class PlayerModel extends Observable {
 		this.haveLose=haveLose;
 		updateAll();
 	}
+	
+	
 }

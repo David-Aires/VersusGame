@@ -42,6 +42,7 @@ import versus.model.PlayerModel;
  *@author Aires David, Quentin Lebrun
  */
 public class GameViewMap extends GameView  implements ActionListener, MouseListener {
+	Thread MessageBoxEnd = new Thread(new MessageBoxEnd());
 	/**
 	 * (?)
 	 */
@@ -66,6 +67,10 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 	 * (?)
 	 */
     private JButton checkNetwork = new JButton();
+    /**
+  	 * (?)
+  	 */
+    private JButton resign = new JButton();
     /**
 	 * (?)
 	 */
@@ -93,7 +98,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
     /**
 	 * (?)
 	 */
-    private JButton reset;
+    private JButton exit;
     /**
 	 * (?)
 	 */
@@ -140,10 +145,9 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
     ImageIcon bonusImage= new ImageIcon("resource/Bonus.png");
     
     
-    public void initGUI() {
-		f.dispose();
-		player.init();
-		new GameViewMap(player,controller,networkController);
+    public void closeGUI() {
+    	f.dispose();
+		MessageBoxEnd.start();
 	}
     
     /**
@@ -165,8 +169,12 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 	 * @param e (?)
 	 */
     public void actionPerformed(ActionEvent e){
-    	if(e.getSource()== reset){
-    		initGUI();
+    	if(e.getSource()== exit){
+    		closeGUI();
+    	}
+    	else if(e.getSource() == resign) {
+    		controller.Resign();
+    		
     	}
     }
     /**
@@ -181,13 +189,16 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 		tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
-        reset = new JButton("Reset");
-        tools.add(reset);
-        tools.add(new JButton("Resign"));
+        exit = new JButton("Exit");
+        tools.add(exit);
+        
+        resign = new JButton("Resign");
+        resign.addActionListener(this);
+        tools.add(resign);
         checkNetwork.setText("");
         checkNetwork.setForeground(Color.WHITE);
         checkNetwork.setBorderPainted(false);
-        reset.addActionListener(this);
+        exit.addActionListener(this);
         tools.addSeparator();
         tools.addSeparator();
         tools.add(message);
@@ -292,7 +303,7 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
         
         //check if local player has lose or win
         if(player.getHaveWin() || player.getHaveLose()) {
-        	initGUI();
+        	closeGUI();
         }
 	}
 
@@ -370,6 +381,21 @@ public class GameViewMap extends GameView  implements ActionListener, MouseListe
 		@Override
 		public void run() {
 			JOptionPane.showMessageDialog(null, Message);
+		}
+	}
+	
+	private class MessageBoxEnd implements Runnable{
+		@Override
+		public void run() {
+			if(player.getHaveWin()==true) {
+				JOptionPane.showMessageDialog(null, "Vous avez gagné!"+"\nFélicitation!");
+				System.exit(2);
+			} else if(player.getHaveLose()==true) {
+				JOptionPane.showMessageDialog(null, "Vous avez perdu!"+"\nDommage!");
+				System.exit(2);
+			} else {
+				System.exit(2);
+			}
 		}
 	}
 }
