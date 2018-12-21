@@ -52,15 +52,15 @@ public class PlayerModel extends Observable {
 	
 	//ArrayList with the position of a bonus on the board
 	/**
-	 * (?)
+	 * 
 	 */
 	List<ArrayList<Integer>> bonus = new ArrayList<>();
 	/**
-	 * (?)
+	 * the pre-arrayList for the "in x" position of the bonuses
 	 */
 	ArrayList<Integer> bonusX = new ArrayList<Integer>(Arrays.asList(2,3,3,7,7,7,7,7,11,11,12));
 	/**
-	 * (?)
+	 * the pre-arrayList for the "in y" position of the bonuses
 	 */
 	ArrayList<Integer> bonusY = new ArrayList<Integer>(Arrays.asList(7,4,10,0,3,7,11,14,4,10,7));
 	
